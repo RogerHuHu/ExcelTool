@@ -3,52 +3,27 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:hiic="http://hiiclibrary.com/"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <sys:String x:Key="LanguageExcelDocument">Excel文档</sys:String>
-    <sys:String x:Key="LanguageAdd">添加</sys:String>
-    <sys:String x:Key="LanguageDelete">删除</sys:String>
-    <sys:String x:Key="LanguageDocumentName">文档名称</sys:String>
-    <sys:String x:Key="LanguageDocumentPath">文档路径</sys:String>
-    <sys:String x:Key="LanguageSetResearchInterestsKeywords">设置研究方向关键字</sys:String>
-    <sys:String x:Key="LanguageCompetentDepartment">主管部门</sys:String>
-    <sys:String x:Key="LanguageSchool">学校名称</sys:String>
-    <sys:String x:Key="LanguageInstitute">学院</sys:String>
-    <sys:String x:Key="LanguageTalentType">人才类别</sys:String>
-    <sys:String x:Key="LanguageName">姓名</sys:String>
-    <sys:String x:Key="LanguageResearchInterestsKeywords">研究方向关键字</sys:String>
-    <sys:String x:Key="LanguageNo">编号</sys:String>
-    <sys:String x:Key="LanguageKeyword">关键字</sys:String>
-    <sys:String x:Key="LanguageClose">关闭</sys:String>
-    <sys:String x:Key="LanguageDocumentMerge">文档合并</sys:String>
-    <sys:String x:Key="LanguageMerge">合并</sys:String>
-    <sys:String x:Key="LanguageOldDocument">原文档</sys:String>
-    <sys:String x:Key="LanguageNewDocument">新文档</sys:String>
-    <sys:String x:Key="LanguageBaseDocument">基准文档</sys:String>
-    <sys:String x:Key="LanguageScreening">筛选</sys:String>
-    <sys:String x:Key="LanguageConfirm">确定</sys:String>
-    <sys:String x:Key="LanguageRemoveInvalidItem">去除无效项</sys:String>
-
-    <hiic:Lang x:Key="ETExcelDocument" ResourceKey="LanguageExcelDocument" />
-    <hiic:Lang x:Key="ETAdd" ResourceKey="LanguageAdd" />
-    <hiic:Lang x:Key="ETDelete" ResourceKey="LanguageDelete" />
-    <hiic:Lang x:Key="ETDocumentName" ResourceKey="LanguageDocumentName" />
-    <hiic:Lang x:Key="ETDocumentPath" ResourceKey="LanguageDocumentPath" />
-    <hiic:Lang x:Key="ETSetResearchInterestsKeywords" ResourceKey="LanguageSetResearchInterestsKeywords" />
-    <hiic:Lang x:Key="ETCompetentDepartment" ResourceKey="LanguageCompetentDepartment" />
-    <hiic:Lang x:Key="ETSchool" ResourceKey="LanguageSchool" />
-    <hiic:Lang x:Key="ETInstitute" ResourceKey="LanguageInstitute" />
-    <hiic:Lang x:Key="ETTalentType" ResourceKey="LanguageTalentType" />
-    <hiic:Lang x:Key="ETName" ResourceKey="LanguageName" />
-    <hiic:Lang x:Key="ETResearchInterestsKeywords" ResourceKey="LanguageResearchInterestsKeywords" />
-    <hiic:Lang x:Key="ETNo" ResourceKey="LanguageNo" />
-    <hiic:Lang x:Key="ETKeyword" ResourceKey="LanguageKeyword" />
-    <hiic:Lang x:Key="ETClose" ResourceKey="LanguageClose" />
-    <hiic:Lang x:Key="ETDocumentMerge" ResourceKey="LanguageDocumentMerge" />
-    <hiic:Lang x:Key="ETMerge" ResourceKey="LanguageMerge" />
-    <hiic:Lang x:Key="ETOldDocument" ResourceKey="LanguageOldDocument" />
-    <hiic:Lang x:Key="ETNewDocument" ResourceKey="LanguageNewDocument" />
-    <hiic:Lang x:Key="ETBaseDocument" ResourceKey="LanguageBaseDocument" />
-    <hiic:Lang x:Key="ETScreening" ResourceKey="LanguageScreening" />
-    <hiic:Lang x:Key="ETConfirm" ResourceKey="LanguageConfirm" />
-    <hiic:Lang x:Key="ETRemoveDuplicate" ResourceKey="LanguageRemoveDuplicate" />
-    <hiic:Lang x:Key="ETRemoveInvalidItem" ResourceKey="LanguageRemoveInvalidItem" />
+    <sys:String x:Key="ETExcelDocument">Excel文档</sys:String>
+    <sys:String x:Key="ETAdd">添加</sys:String>
+    <sys:String x:Key="ETDelete">删除</sys:String>
+    <sys:String x:Key="ETDocumentName">文档名称</sys:String>
+    <sys:String x:Key="ETDocumentPath">文档路径</sys:String>
+    <sys:String x:Key="ETSetResearchInterestsKeywords">设置研究方向关键字</sys:String>
+    <sys:String x:Key="ETCompetentDepartment">主管部门</sys:String>
+    <sys:String x:Key="ETSchool">学校名称</sys:String>
+    <sys:String x:Key="ETInstitute">学院</sys:String>
+    <sys:String x:Key="ETTalentType">人才类别</sys:String>
+    <sys:String x:Key="ETName">姓名</sys:String>
+    <sys:String x:Key="ETResearchInterestsKeywords">研究方向关键字</sys:String>
+    <sys:String x:Key="ETNo">编号</sys:String>
+    <sys:String x:Key="ETKeyword">关键字</sys:String>
+    <sys:String x:Key="ETClose">关闭</sys:String>
+    <sys:String x:Key="ETDocumentMerge">文档合并</sys:String>
+    <sys:String x:Key="ETMerge">合并</sys:String>
+    <sys:String x:Key="ETOldDocument">原文档</sys:String>
+    <sys:String x:Key="ETNewDocument">新文档</sys:String>
+    <sys:String x:Key="ETBaseDocument">基准文档</sys:String>
+    <sys:String x:Key="ETScreening">筛选</sys:String>
+    <sys:String x:Key="ETConfirm">确定</sys:String>
+    <sys:String x:Key="ETRemoveInvalidItem">去除无效项</sys:String>
 </ResourceDictionary>
