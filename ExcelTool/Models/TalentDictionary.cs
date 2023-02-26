@@ -18,13 +18,13 @@ namespace ExcelTool.Models
 
         public void Add(Talent talent)
         {
-            if (!dic.ContainsKey(talent.Name))
+            if (!string.IsNullOrEmpty(talent.Name) && !dic.ContainsKey(talent.Name))
                 dic.Add(talent.Name, talent);
         }
 
         public void Remove(Talent talent)
         {
-            if (dic.ContainsKey(talent.Name))
+            if (!string.IsNullOrEmpty(talent.Name) && dic.ContainsKey(talent.Name))
                 dic.Remove(talent.Name);
         }
 
