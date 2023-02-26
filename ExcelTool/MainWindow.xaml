@@ -39,6 +39,13 @@
                     Content="{hiic:Lang Name=ETRemoveInvalidItem}"
                     FontSize="{DynamicResource FontSize4}"
                     Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    Width="{Binding ButtonWidth}"
+                    Margin="5,0,0,0"
+                    Command="{Binding DeduplicationByNameCmd}"
+                    Content="{hiic:Lang Name=ETDeduplicationByName}"
+                    FontSize="{DynamicResource FontSize4}"
+                    Style="{StaticResource ButtonPrimary}" />
             </WrapPanel>
         </hc:Card>
     </Grid>

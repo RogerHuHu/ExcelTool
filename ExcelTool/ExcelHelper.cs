@@ -61,7 +61,7 @@ namespace ExcelTool
 
         public static void WriteTalentTitle(ExcelWorksheet sheet)
         {
-            sheet.Cells[1, 1].Value = "主管部门";
+            sheet.Cells[1, 1].Value = "地方";
             sheet.Cells[1, 2].Value = "学校名称";
             sheet.Cells[1, 3].Value = "学院";
             sheet.Cells[1, 4].Value = "人才类别";

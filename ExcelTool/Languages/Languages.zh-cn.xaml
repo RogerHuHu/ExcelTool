@@ -26,4 +26,9 @@
     <sys:String x:Key="ETScreening">筛选</sys:String>
     <sys:String x:Key="ETConfirm">确定</sys:String>
     <sys:String x:Key="ETRemoveInvalidItem">去除无效项</sys:String>
+    <sys:String x:Key="ETDeduplicationByName">按姓名去重</sys:String>
+    <sys:String x:Key="ETAnalyze">分析</sys:String>
+    <sys:String x:Key="ETDeduplication">去重</sys:String>
+    <sys:String x:Key="ETSelect">选择</sys:String>
+    <sys:String x:Key="ETIsDeduplicationBySchool">是否按学校去重</sys:String>
 </ResourceDictionary>

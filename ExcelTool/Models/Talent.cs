@@ -4,6 +4,7 @@
     {
         #region 变量
 
+        private bool isSelected;
         private string competentDepartment; // 主管部门
         private string school; // 学校
         private string institute; // 学院
@@ -18,10 +19,12 @@
         #region 构造函数
 
         public Talent()
-        { }
+        {
+            isSelected = false;
+        }
 
         public Talent(string competentDepartment, string school, string institute, string talentType, string name,
-                      string researchInterestsKeywords, string researchInterests, string remark)
+                      string researchInterestsKeywords, string researchInterests, string remark) : this()
         {
             this.competentDepartment = competentDepartment;
             this.school = school;
@@ -36,6 +39,12 @@
         #endregion 构造函数
 
         #region 属性
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set => isSelected = value;
+        }
 
         public string CompetentDepartment
         {
