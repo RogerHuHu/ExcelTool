@@ -18,6 +18,7 @@ namespace ExcelTool.ViewModels
         private string newFilePath;
         private List<Talent> duplicateNames;
         private bool isDeduplicationBySchool;
+        private bool isRetainDuplicateTalent;
         private TalentDictionary dic = null;
         private TalentDictionary dic1 = null;
 
@@ -61,6 +62,12 @@ namespace ExcelTool.ViewModels
         {
             get => isDeduplicationBySchool;
             set => SetProperty(ref isDeduplicationBySchool, value);
+        }
+
+        public bool IsRetainDuplicateTalent
+        {
+            get => isRetainDuplicateTalent;
+            set => SetProperty(ref isRetainDuplicateTalent, value);
         }
 
         #endregion 属性
@@ -140,7 +147,7 @@ namespace ExcelTool.ViewModels
                         talentsDic[talent.Name].Add(talent);
                     else
                     {
-                        if(talent.School != talentsDic[talent.Name][0].School)
+                        if(talent.School == talentsDic[talent.Name][0].School)
                             talentsDic[talent.Name].Add(talent);
                     }
                 }
@@ -166,10 +173,33 @@ namespace ExcelTool.ViewModels
         /// </summary>
         private void Deduplicate()
         {
-            foreach(var talent in DuplicateNames)
+            if (!IsRetainDuplicateTalent)
+            {
+                // 不保留重复人才信息，直接从表中删除
+                foreach (var talent in DuplicateNames)
+                {
+                    if (talent.IsSelected) continue;
+                    dic.Remove(talent);
+                }
+            }
+            else
+            {
+                // 保留重复人才信息，将人才信息添加到当前学校的末尾，并在学院一列标注重复
+
+            }
+
+            foreach (var talent in DuplicateNames)
             {
                 if (talent.IsSelected) continue;
                 dic.Remove(talent);
+
+                // 1.若不保留重复人才信息，直接从表中删除
+                // 2.若保留重复人才信息，将人才信息添加到当前学校的末尾，并在学院一列标注重复
+                if (IsRetainDuplicateTalent)
+                {
+                    talent.Institute = talent.Institute + "(重复)";
+                    dic.Add(talent);
+                }
             }
 
             ExcelPackage package = ExcelHelper.NewExcelPackage(NewFilePath);

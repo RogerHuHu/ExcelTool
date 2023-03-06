@@ -98,8 +98,12 @@
                         <StackPanel Orientation="Horizontal">
                             <CheckBox
                                 Margin="5,5,0,5"
-                                Content="{hiic:Lang Name=ETIsDeduplicationBySchool}"
+                                Content="{hiic:Lang Name=ETDeduplicationBySchool}"
                                 IsChecked="{Binding IsDeduplicationBySchool}" />
+                            <CheckBox
+                                Margin="5,5,0,5"
+                                Content="{hiic:Lang Name=ETRetainDuplicateTalent}"
+                                IsChecked="{Binding IsRetainDuplicateTalent}" />
                             <Button
                                 Margin="5,5,0,5"
                                 Command="{Binding AnalyzeCmd}"

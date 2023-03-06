@@ -30,5 +30,6 @@
     <sys:String x:Key="ETAnalyze">分析</sys:String>
     <sys:String x:Key="ETDeduplication">去重</sys:String>
     <sys:String x:Key="ETSelect">选择</sys:String>
-    <sys:String x:Key="ETIsDeduplicationBySchool">是否按学校去重</sys:String>
+    <sys:String x:Key="ETDeduplicationBySchool">按学校去重（同学校才认为是重复的）</sys:String>
+    <sys:String x:Key="ETRetainDuplicateTalent">保留重复人才信息（保存到当前学校末尾）</sys:String>
 </ResourceDictionary>
