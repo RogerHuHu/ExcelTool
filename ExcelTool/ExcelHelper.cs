@@ -23,12 +23,14 @@ namespace ExcelTool
                 {
                     dic.Add(new Talent(GetMergeValue(sheet, r, 1),
                                            GetMergeValue(sheet, r, 2),
-                                           sheet.GetValue<string>(r, 3),
+                                           GetMergeValue(sheet, r, 3),
                                            GetMergeValue(sheet, r, 4),
-                                           sheet.GetValue<string>(r, 5),
+                                           GetMergeValue(sheet, r, 5),
                                            sheet.GetValue<string>(r, 6),
                                            sheet.GetValue<string>(r, 7),
-                                           sheet.GetValue<string>(r, 8)
+                                           sheet.GetValue<string>(r, 8),
+                                           sheet.GetValue<string>(r, 9),
+                                           sheet.GetValue<string>(r, 10)
                                            ));
                 }
             }
@@ -65,10 +67,12 @@ namespace ExcelTool
             sheet.Cells[1, 2].Value = "学校名称";
             sheet.Cells[1, 3].Value = "学院";
             sheet.Cells[1, 4].Value = "人才类别";
-            sheet.Cells[1, 5].Value = "姓名";
-            sheet.Cells[1, 6].Value = "研究方向关键词";
-            sheet.Cells[1, 7].Value = "详细研究方向";
-            sheet.Cells[1, 8].Value = "备注";
+            sheet.Cells[1, 5].Value = "职位";
+            sheet.Cells[1, 6].Value = "姓名";
+            sheet.Cells[1, 7].Value = "研究方向关键词";
+            sheet.Cells[1, 8].Value = "详细研究方向";
+            sheet.Cells[1, 9].Value = "备注";
+            sheet.Cells[1, 10].Value = "科学院";
         }
 
         public static void WriteTalentInfo(ExcelWorksheet sheet, ICollection<Talent> talents)
@@ -80,10 +84,12 @@ namespace ExcelTool
                 sheet.Cells[startRow, 2].Value = talent.School;
                 sheet.Cells[startRow, 3].Value = talent.Institute;
                 sheet.Cells[startRow, 4].Value = talent.TalentType;
-                sheet.Cells[startRow, 5].Value = talent.Name;
-                sheet.Cells[startRow, 6].Value = talent.ResearchInterestsKeywords;
-                sheet.Cells[startRow, 7].Value = talent.ResearchInterests;
-                sheet.Cells[startRow, 8].Value = talent.Remark;
+                sheet.Cells[startRow, 5].Value = talent.Position;
+                sheet.Cells[startRow, 6].Value = talent.Name;
+                sheet.Cells[startRow, 7].Value = talent.ResearchInterestsKeywords;
+                sheet.Cells[startRow, 8].Value = talent.ResearchInterests;
+                sheet.Cells[startRow, 9].Value = talent.Remark;
+                sheet.Cells[startRow, 10].Value = talent.AcademyOfScience;
                 startRow++;
             }
         }

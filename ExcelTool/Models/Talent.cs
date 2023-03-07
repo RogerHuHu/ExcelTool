@@ -10,9 +10,11 @@
         private string institute; // 学院
         private string talentType; // 人才类别
         private string name; // 姓名
+        private string position; // 职位
         private string researchInterestsKeywords; // 研究方向关键词
         private string researchInterests; // 详细研究方向
         private string remark; // 备注
+        private string academyOfScience; // 科学院
 
         #endregion 变量
 
@@ -24,16 +26,19 @@
         }
 
         public Talent(string competentDepartment, string school, string institute, string talentType, string name,
-                      string researchInterestsKeywords, string researchInterests, string remark) : this()
+                      string position, string researchInterestsKeywords, string researchInterests, string remark,
+                      string academyOfScience) : this()
         {
             this.competentDepartment = competentDepartment;
             this.school = school;
             this.institute = institute == null ? "未知" : institute;
             this.talentType = talentType;
             this.name = name;
+            this.position = position;
             this.researchInterestsKeywords = researchInterestsKeywords;
             this.researchInterests = researchInterests;
             this.remark = remark;
+            this.academyOfScience = academyOfScience;
         }
 
         #endregion 构造函数
@@ -76,6 +81,12 @@
             set => name = value;
         }
 
+        public string Position
+        {
+            get => position;
+            set => position = value;
+        }
+
         public string ResearchInterestsKeywords
         {
             get => researchInterestsKeywords;
@@ -92,6 +103,12 @@
         {
             get => remark;
             set => remark = value;
+        }
+
+        public string AcademyOfScience
+        {
+            get => academyOfScience;
+            set => academyOfScience = value;
         }
 
         #endregion 属性
