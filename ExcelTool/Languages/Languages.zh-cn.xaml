@@ -9,12 +9,14 @@
     <sys:String x:Key="ETDocumentName">文档名称</sys:String>
     <sys:String x:Key="ETDocumentPath">文档路径</sys:String>
     <sys:String x:Key="ETSetResearchInterestsKeywords">设置研究方向关键字</sys:String>
-    <sys:String x:Key="ETCompetentDepartment">主管部门</sys:String>
-    <sys:String x:Key="ETSchool">学校名称</sys:String>
+    <sys:String x:Key="ETCompetentDepartment">地方</sys:String>
+    <sys:String x:Key="ETSchool">学校</sys:String>
     <sys:String x:Key="ETInstitute">学院</sys:String>
     <sys:String x:Key="ETTalentType">人才类别</sys:String>
+    <sys:String x:Key="ETPosition">职位</sys:String>
     <sys:String x:Key="ETName">姓名</sys:String>
     <sys:String x:Key="ETResearchInterestsKeywords">研究方向关键字</sys:String>
+    <sys:String x:Key="ETProject">项目</sys:String>
     <sys:String x:Key="ETNo">编号</sys:String>
     <sys:String x:Key="ETKeyword">关键字</sys:String>
     <sys:String x:Key="ETClose">关闭</sys:String>
@@ -32,4 +34,5 @@
     <sys:String x:Key="ETSelect">选择</sys:String>
     <sys:String x:Key="ETDeduplicationBySchool">按学校去重（同学校才认为是重复的）</sys:String>
     <sys:String x:Key="ETRetainDuplicateTalent">保留重复人才信息（保存到当前学校末尾）</sys:String>
+    <sys:String x:Key="ETIsConfuseSearch">模糊搜索</sys:String>
 </ResourceDictionary>

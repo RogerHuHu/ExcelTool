@@ -51,7 +51,10 @@ namespace ExcelTool.Models
                 }
 
                 if (valid)
-                    talents.Add(item);
+                {
+                    if (screenCondition.Projects.Count == 0 || screenCondition.Projects.Contains(item.Project))
+                        talents.Add(item);
+                }
             }
 
             ExcelHelper.WriteTalentInfo(sheet, talents);
@@ -68,6 +71,17 @@ namespace ExcelTool.Models
             return result;
         }
 
+        public List<string> GetProjects()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+            {
+                if(item.Project != null)
+                    result.Add(item.Project);
+            }
+            return result;
+        }
+
         public Talent GetNextTalent()
         {
             var item = dic.First();
@@ -76,11 +90,11 @@ namespace ExcelTool.Models
         }
     }
 
-    public class TalentTypeDictionary
+    public class PositionDictionary
     {
         private Dictionary<string, TalentNameDictionary> dic = null;
 
-        public TalentTypeDictionary()
+        public PositionDictionary()
         {
             dic = new Dictionary<string, TalentNameDictionary>();
         }
@@ -89,14 +103,125 @@ namespace ExcelTool.Models
 
         public void Add(Talent talent)
         {
-            TalentNameDictionary tmpDic = null;
+            TalentNameDictionary tmpDic;
+            if (dic.ContainsKey(talent.Position))
+            {
+                tmpDic = dic[talent.Position];
+            }
+            else
+            {
+                tmpDic = new TalentNameDictionary();
+                dic.Add(talent.Position, tmpDic);
+            }
+
+            tmpDic.Add(talent);
+        }
+
+        public void Remove(Talent talent)
+        {
+            if (dic.ContainsKey(talent.Position))
+            {
+                dic[talent.Position].Remove(talent);
+                if (dic[talent.Position].Count == 0)
+                    dic.Remove(talent.Position);
+            }
+        }
+
+        public void WriteToExcel(ExcelWorksheet sheet)
+        {
+            foreach (var item in dic.Values)
+            {
+                int startRow = sheet.Dimension.End.Row + 1;
+                item.WriteToExcel(sheet);
+                int endRow = sheet.Dimension.End.Row;
+                if (endRow < startRow) continue;
+                sheet.Cells[startRow, 5, endRow, 5].Merge = true;
+            }
+        }
+
+        public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
+        {
+            foreach (var item in dic)
+            {
+                int startRow = sheet.Dimension.End.Row + 1;
+                if (screenCondition.Positions.Count > 0 && !screenCondition.Positions.Contains(item.Key))
+                    continue;
+                item.Value.WriteToExcel(sheet, screenCondition);
+                int endRow = sheet.Dimension.End.Row;
+                if (endRow < startRow) continue;
+                sheet.Cells[startRow, 5, endRow, 5].Merge = true;
+                sheet.Cells[startRow, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                sheet.Cells[startRow, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            }
+        }
+
+        public List<string> GetPositions()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Keys)
+                result.Add(item);
+            return result;
+        }
+
+        public List<string> GetResearchInterestsKeywords()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetResearchInterestsKeywords());
+            return result;
+        }
+
+        public List<string> GetProjects()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetProjects());
+            return result;
+        }
+
+        public Talent GetNextTalent()
+        {
+            Talent talent = null;
+            while (dic.Count > 0)
+            {
+                var item = dic.ElementAt(0);
+                if (item.Value.Count == 0)
+                {
+                    dic.Remove(item.Key);
+                }
+                else
+                {
+                    talent = dic.ElementAt(0).Value.GetNextTalent();
+                    if (talent == null) continue;
+                    break;
+                }
+            }
+
+            return talent;
+        }
+    }
+
+    public class TalentTypeDictionary
+    {
+        private Dictionary<string, PositionDictionary> dic = null;
+
+        public TalentTypeDictionary()
+        {
+            dic = new Dictionary<string, PositionDictionary>();
+        }
+
+        public int Count => dic.Count;
+
+        public void Add(Talent talent)
+        {
+            PositionDictionary tmpDic;
             if (dic.ContainsKey(talent.TalentType))
             {
                 tmpDic = dic[talent.TalentType];
             }
             else
             {
-                tmpDic = new TalentNameDictionary();
+                tmpDic = new PositionDictionary();
                 dic.Add(talent.TalentType, tmpDic);
             }
 
@@ -149,11 +274,27 @@ namespace ExcelTool.Models
             return result;
         }
 
+        public List<string> GetPositions()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetPositions());
+            return result;
+        }
+
         public List<string> GetResearchInterestsKeywords()
         {
             List<string> result = new List<string>();
             foreach (var item in dic.Values)
                 result.AddRange(item.GetResearchInterestsKeywords());
+            return result;
+        }
+
+        public List<string> GetProjects()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetProjects());
             return result;
         }
 
@@ -226,9 +367,23 @@ namespace ExcelTool.Models
         {
             foreach (var item in dic)
             {
-                if (screenCondition.Institutes.Count > 0 && !screenCondition.Institutes.Contains(item.Key))
-                    continue;
-                item.Value.WriteToExcel(sheet, screenCondition);
+                //if (screenCondition.Institutes.Count > 0 && !screenCondition.Institutes.Contains(item.Key))
+                //    continue;
+                //item.Value.WriteToExcel(sheet, screenCondition);
+
+                if(screenCondition.Institutes.Count == 0)
+                    item.Value.WriteToExcel(sheet, screenCondition);
+                else
+                {
+                    foreach(string str in screenCondition.Institutes)
+                    {
+                        if(item.Key.Contains(str))
+                        {
+                            item.Value.WriteToExcel(sheet, screenCondition);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -248,11 +403,27 @@ namespace ExcelTool.Models
             return result;
         }
 
+        public List<string> GetPositions()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetPositions());
+            return result;
+        }
+
         public List<string> GetResearchInterestsKeywords()
         {
             List<string> result = new List<string>();
             foreach (var item in dic.Values)
                 result.AddRange(item.GetResearchInterestsKeywords());
+            return result;
+        }
+
+        public List<string> GetProjects()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetProjects());
             return result;
         }
 
@@ -367,11 +538,27 @@ namespace ExcelTool.Models
             return result;
         }
 
+        public List<string> GetPositions()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetPositions());
+            return result;
+        }
+
         public List<string> GetResearchInterestsKeywords()
         {
             List<string> result = new List<string>();
             foreach (var item in dic.Values)
                 result.AddRange(item.GetResearchInterestsKeywords());
+            return result;
+        }
+
+        public List<string> GetProjects()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetProjects());
             return result;
         }
 
@@ -505,12 +692,34 @@ namespace ExcelTool.Models
             return set.ToList();
         }
 
+        public List<string> GetPositions()
+        {
+            HashSet<string> set = new HashSet<string>();
+            foreach (var value in dic.Values)
+            {
+                foreach (var item in value.GetPositions())
+                    set.Add(item);
+            }
+            return set.ToList();
+        }
+
         public List<string> GetResearchInterestsKeywords()
         {
             HashSet<string> set = new HashSet<string>();
             foreach (var value in dic.Values)
             {
                 foreach (var item in value.GetResearchInterestsKeywords())
+                    set.Add(item);
+            }
+            return set.ToList();
+        }
+
+        public List<string> GetProjects()
+        {
+            HashSet<string> set = new HashSet<string>();
+            foreach (var value in dic.Values)
+            {
+                foreach (var item in value.GetProjects())
                     set.Add(item);
             }
             return set.ToList();
@@ -595,9 +804,19 @@ namespace ExcelTool.Models
             return dic.GetTalentTypes();
         }
 
+        public List<string> GetPositions()
+        {
+            return dic.GetPositions();
+        }
+
         public List<string> GetResearchInterestsKeywords()
         {
             return dic.GetResearchInterestsKeywords();
+        }
+
+        public List<string> GetProjects()
+        {
+            return dic.GetProjects();
         }
 
         public Talent GetNextTalent()

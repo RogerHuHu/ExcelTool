@@ -15,6 +15,9 @@
         private string researchInterests; // 详细研究方向
         private string remark; // 备注
         private string academyOfScience; // 科学院
+        private string professionalTitle; // 职称
+        private string project; // 国家重点研发项目
+        private string group; // 国家重点研发项目分组
 
         #endregion 变量
 
@@ -25,9 +28,9 @@
             isSelected = false;
         }
 
-        public Talent(string competentDepartment, string school, string institute, string talentType, string name,
-                      string position, string researchInterestsKeywords, string researchInterests, string remark,
-                      string academyOfScience) : this()
+        public Talent(string competentDepartment, string school, string institute, string talentType, string position,
+                      string name, string researchInterestsKeywords, string researchInterests, string remark,
+                      string academyOfScience, string professionalTitle, string project, string group) : this()
         {
             this.competentDepartment = competentDepartment;
             this.school = school;
@@ -39,6 +42,9 @@
             this.researchInterests = researchInterests;
             this.remark = remark;
             this.academyOfScience = academyOfScience;
+            this.professionalTitle = professionalTitle;
+            this.project = project;
+            this.group = group;
         }
 
         #endregion 构造函数
@@ -109,6 +115,24 @@
         {
             get => academyOfScience;
             set => academyOfScience = value;
+        }
+
+        public string ProfessionalTitle
+        {
+            get => professionalTitle;
+            set => professionalTitle = value;
+        }
+
+        public string Project
+        {
+            get => project;
+            set => project = value;
+        }
+
+        public string Group
+        {
+            get => group;
+            set => group = value;
         }
 
         #endregion 属性

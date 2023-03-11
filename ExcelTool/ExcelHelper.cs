@@ -30,7 +30,10 @@ namespace ExcelTool
                                            sheet.GetValue<string>(r, 7),
                                            sheet.GetValue<string>(r, 8),
                                            sheet.GetValue<string>(r, 9),
-                                           sheet.GetValue<string>(r, 10)
+                                           sheet.GetValue<string>(r, 10),
+                                           sheet.GetValue<string>(r, 11),
+                                           GetMergeValue(sheet, r, 12),
+                                           GetMergeValue(sheet, r, 13)
                                            ));
                 }
             }
@@ -64,7 +67,7 @@ namespace ExcelTool
         public static void WriteTalentTitle(ExcelWorksheet sheet)
         {
             sheet.Cells[1, 1].Value = "地方";
-            sheet.Cells[1, 2].Value = "学校名称";
+            sheet.Cells[1, 2].Value = "学校";
             sheet.Cells[1, 3].Value = "学院";
             sheet.Cells[1, 4].Value = "人才类别";
             sheet.Cells[1, 5].Value = "职位";
@@ -73,6 +76,15 @@ namespace ExcelTool
             sheet.Cells[1, 8].Value = "详细研究方向";
             sheet.Cells[1, 9].Value = "备注";
             sheet.Cells[1, 10].Value = "科学院";
+            sheet.Cells[1, 11].Value = "职称";
+            sheet.Cells[1, 12].Value = "项目";
+            sheet.Cells[1, 13].Value = "分组";
+
+            for(int i = 1; i <= 13; i++)
+            {
+                sheet.Cells[1, i].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[1, i].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            }
         }
 
         public static void WriteTalentInfo(ExcelWorksheet sheet, ICollection<Talent> talents)
@@ -81,15 +93,58 @@ namespace ExcelTool
             foreach(var talent in talents)
             {
                 sheet.Cells[startRow, 1].Value = talent.CompetentDepartment;
+                sheet.Cells[startRow, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
                 sheet.Cells[startRow, 2].Value = talent.School;
+                sheet.Cells[startRow, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
                 sheet.Cells[startRow, 3].Value = talent.Institute;
+                sheet.Cells[startRow, 3].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 3].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
                 sheet.Cells[startRow, 4].Value = talent.TalentType;
+                sheet.Cells[startRow, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
                 sheet.Cells[startRow, 5].Value = talent.Position;
+                sheet.Cells[startRow, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
                 sheet.Cells[startRow, 6].Value = talent.Name;
+                sheet.Cells[startRow, 6].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 6].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
                 sheet.Cells[startRow, 7].Value = talent.ResearchInterestsKeywords;
+                sheet.Cells[startRow, 7].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                sheet.Cells[startRow, 7].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                sheet.Cells[startRow, 7].Style.WrapText = true;
+
                 sheet.Cells[startRow, 8].Value = talent.ResearchInterests;
+                sheet.Cells[startRow, 8].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                sheet.Cells[startRow, 8].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                sheet.Cells[startRow, 8].Style.WrapText = true;
+
                 sheet.Cells[startRow, 9].Value = talent.Remark;
+                sheet.Cells[startRow, 9].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
+                sheet.Cells[startRow, 9].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                sheet.Cells[startRow, 9].Style.WrapText = true;
+
                 sheet.Cells[startRow, 10].Value = talent.AcademyOfScience;
+                sheet.Cells[startRow, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                sheet.Cells[startRow, 11].Value = talent.ProfessionalTitle;
+                sheet.Cells[startRow, 11].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                sheet.Cells[startRow, 11].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                sheet.Cells[startRow, 12].Value = talent.Project;
+                sheet.Cells[startRow, 12].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                sheet.Cells[startRow, 13].Value = talent.Group;
+                sheet.Cells[startRow, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
                 startRow++;
             }
         }
