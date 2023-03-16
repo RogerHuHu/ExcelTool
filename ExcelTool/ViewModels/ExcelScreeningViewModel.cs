@@ -4,6 +4,7 @@ using HIIUtils.Commands;
 using HIIUtils.HIIFile;
 using HIIUtils.MVVM;
 using Microsoft.Win32;
+using Microsoft.Xaml.Behaviors.Media;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,47 @@ using System.Threading.Tasks;
 
 namespace ExcelTool.ViewModels
 {
+    public class SelectionItem : ViewModelBase
+    {
+        private string name;
+        private bool isSelected;
+
+        public SelectionItem(string name)
+        {
+            this.name = name;
+            isSelected = false;
+        }
+
+        public string Name
+        {
+            get => name;
+            set => SetProperty(ref name, value);
+        }
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set => SetProperty(ref isSelected, value);
+        }
+    }
+
     public class ExcelScreeningViewModel : ViewModelBase
     {
         #region 变量
         private string oldFilePath;
         private string newFilePath;
         TalentDictionary dic = null;
+
+        private bool showtTalentType = true;
+        private bool showPosition = true;
+        private bool showName = true;
+        private bool showResearchInterestsKeywords = true;
+        private bool showResearchInterests = true;
+        private bool showRemark = true;
+        private bool showAcademyOfScience = true;
+        private bool showProfessionalTitle = true;
+        private bool showProject = true;
+        private bool showGroup = true;
 
         private ObservableCollection<string> competentDepartments = null;
         private ObservableCollection<string> schools = null;
@@ -52,6 +88,136 @@ namespace ExcelTool.ViewModels
         {
             get => newFilePath;
             set => SetProperty(ref newFilePath, value);
+        }
+
+        public bool ShowTalentType
+        {
+            get => showtTalentType;
+            set
+            {
+                if (showtTalentType != value)
+                {
+                    showtTalentType = value;
+                    screenCondition.ShowTitles[3] = value;
+                }
+            }
+        }
+
+        public bool ShowPosition
+        {
+            get => showPosition;
+            set
+            {
+                if (showPosition != value)
+                {
+                    showPosition = value;
+                    screenCondition.ShowTitles[4] = value;
+                }
+            }
+        }
+
+        public bool ShowName
+        {
+            get => showName;
+            set
+            {
+                if (showName != value)
+                {
+                    showName = value;
+                    screenCondition.ShowTitles[5] = value;
+                }
+            }
+        }
+
+        public bool ShowResearchInterestsKeywords
+        {
+            get => showResearchInterestsKeywords;
+            set
+            {
+                if (showResearchInterestsKeywords != value)
+                {
+                    showResearchInterestsKeywords = value;
+                    screenCondition.ShowTitles[6] = value;
+                }
+            }
+        }
+
+        public bool ShowResearchInterests
+        {
+            get => showResearchInterests;
+            set
+            {
+                if (showResearchInterests != value)
+                {
+                    showResearchInterests = value;
+                    screenCondition.ShowTitles[7] = value;
+                }
+            }
+        }
+
+        public bool ShowRemark
+        {
+            get => showRemark;
+            set
+            {
+                if (showRemark != value)
+                {
+                    showRemark = value;
+                    screenCondition.ShowTitles[8] = value;
+                }
+            }
+        }
+
+        public bool ShowAcademyOfScience
+        {
+            get => showAcademyOfScience;
+            set
+            {
+                if (showAcademyOfScience != value)
+                {
+                    showAcademyOfScience = value;
+                    screenCondition.ShowTitles[9] = value;
+                }
+            }
+        }
+
+        public bool ShowProfessionalTitle
+        {
+            get => showProfessionalTitle;
+            set
+            {
+                if (showProfessionalTitle != value)
+                {
+                    showProfessionalTitle = value;
+                    screenCondition.ShowTitles[10] = value;
+                }
+            }
+        }
+
+        public bool ShowProject
+        {
+            get => showProject;
+            set
+            {
+                if (showProject != value)
+                {
+                    showProject = value;
+                    screenCondition.ShowTitles[11] = value;
+                }
+            }
+        }
+
+        public bool ShowGroup
+        {
+            get => showGroup;
+            set
+            {
+                if (showGroup != value)
+                {
+                    showGroup = value;
+                    screenCondition.ShowTitles[12] = value;
+                }
+            }
         }
 
         public ObservableCollection<string> CompetentDepartments

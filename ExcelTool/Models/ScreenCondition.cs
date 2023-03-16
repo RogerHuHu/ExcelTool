@@ -4,6 +4,8 @@ namespace ExcelTool.Models
 {
     public class ScreenCondition
     {
+        private bool[] showTitles = null;
+
         private IList<object> competentDepartments = null;
         private IList<object> schools = null;
         private IList<object> institutes = null;
@@ -11,6 +13,22 @@ namespace ExcelTool.Models
         private IList<object> positions = null;
         private IList<object> researchInterestsKeywords = null;
         private IList<object> projects = null;
+
+        public bool[] ShowTitles
+        {
+            get
+            {
+                if (showTitles == null)
+                {
+                    showTitles = new bool[13];
+                    for(int i = 0; i < showTitles.Length; i++)
+                        showTitles[i] = true;
+                }
+                return showTitles;
+            }
+
+            private set { }
+        }
 
         public IList<object> CompetentDepartments
         {

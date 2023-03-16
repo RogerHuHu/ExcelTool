@@ -7,7 +7,7 @@
     xmlns:hiic="http://hiiclibrary.com/"
     xmlns:local="clr-namespace:ExcelTool"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Excel助手"
+    Title="人才信息筛选工具"
     Width="800"
     Height="800"
     UseLayoutRounding="True"

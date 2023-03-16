@@ -16,6 +16,7 @@
     <sys:String x:Key="ETPosition">职位</sys:String>
     <sys:String x:Key="ETName">姓名</sys:String>
     <sys:String x:Key="ETResearchInterestsKeywords">研究方向关键字</sys:String>
+    <sys:String x:Key="ETResearchInterests">详细研究方向</sys:String>
     <sys:String x:Key="ETProject">项目</sys:String>
     <sys:String x:Key="ETNo">编号</sys:String>
     <sys:String x:Key="ETKeyword">关键字</sys:String>
@@ -35,4 +36,8 @@
     <sys:String x:Key="ETDeduplicationBySchool">按学校去重（同学校才认为是重复的）</sys:String>
     <sys:String x:Key="ETRetainDuplicateTalent">保留重复人才信息（保存到当前学校末尾）</sys:String>
     <sys:String x:Key="ETIsConfuseSearch">模糊搜索</sys:String>
+    <sys:String x:Key="ETRemark">备注</sys:String>
+    <sys:String x:Key="ETAcademyOfScience">科学院</sys:String>
+    <sys:String x:Key="ETProfessionalTitle">职称</sys:String>
+    <sys:String x:Key="ETGroup">分组</sys:String>
 </ResourceDictionary>

@@ -774,7 +774,7 @@ namespace ExcelTool.Models
 
         public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
         {
-            ExcelHelper.WriteTalentTitle(sheet);
+            ExcelHelper.WriteTalentTitle(sheet, screenCondition);
             dic.WriteToExcel(sheet, screenCondition);
         }
 

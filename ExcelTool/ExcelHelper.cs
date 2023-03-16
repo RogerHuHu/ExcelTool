@@ -8,6 +8,12 @@ namespace ExcelTool
 {
     public class ExcelHelper
     {
+        private static string[] titles = new string[]
+        {
+            "地方", "学校", "学院", "人才类别", "职位", "姓名",
+            "研究方向关键词", "详细研究方向", "备注", "科学院", "职称", "项目", "分组"
+        };
+
         public static void ReadTalentInfo(string filePath, TalentDictionary dic)
         {
             if (dic == null) return;
@@ -66,25 +72,31 @@ namespace ExcelTool
 
         public static void WriteTalentTitle(ExcelWorksheet sheet)
         {
-            sheet.Cells[1, 1].Value = "地方";
-            sheet.Cells[1, 2].Value = "学校";
-            sheet.Cells[1, 3].Value = "学院";
-            sheet.Cells[1, 4].Value = "人才类别";
-            sheet.Cells[1, 5].Value = "职位";
-            sheet.Cells[1, 6].Value = "姓名";
-            sheet.Cells[1, 7].Value = "研究方向关键词";
-            sheet.Cells[1, 8].Value = "详细研究方向";
-            sheet.Cells[1, 9].Value = "备注";
-            sheet.Cells[1, 10].Value = "科学院";
-            sheet.Cells[1, 11].Value = "职称";
-            sheet.Cells[1, 12].Value = "项目";
-            sheet.Cells[1, 13].Value = "分组";
+            //sheet.Cells[1, 1].Value = "地方";
+            //sheet.Cells[1, 2].Value = "学校";
+            //sheet.Cells[1, 3].Value = "学院";
+            //sheet.Cells[1, 4].Value = "人才类别";
+            //sheet.Cells[1, 5].Value = "职位";
+            //sheet.Cells[1, 6].Value = "姓名";
+            //sheet.Cells[1, 7].Value = "研究方向关键词";
+            //sheet.Cells[1, 8].Value = "详细研究方向";
+            //sheet.Cells[1, 9].Value = "备注";
+            //sheet.Cells[1, 10].Value = "科学院";
+            //sheet.Cells[1, 11].Value = "职称";
+            //sheet.Cells[1, 12].Value = "项目";
+            //sheet.Cells[1, 13].Value = "分组";
 
             for(int i = 1; i <= 13; i++)
             {
+                sheet.Cells[1, i].Value = titles[i - 1];
                 sheet.Cells[1, i].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                 sheet.Cells[1, i].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
             }
+        }
+
+        public static void WriteTalentTitle(ExcelWorksheet sheet, ScreenCondition screenConditio)
+        {
+
         }
 
         public static void WriteTalentInfo(ExcelWorksheet sheet, ICollection<Talent> talents)
