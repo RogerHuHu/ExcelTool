@@ -57,7 +57,7 @@ namespace ExcelTool.Models
                 }
             }
 
-            ExcelHelper.WriteTalentInfo(sheet, talents);
+            ExcelHelper.WriteTalentInfo(sheet, talents, screenCondition);
         }
 
         public List<string> GetResearchInterestsKeywords()

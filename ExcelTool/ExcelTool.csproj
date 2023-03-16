@@ -95,6 +95,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="VirtualizingWrapPanel, Version=1.5.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VirtualizingWrapPanel.1.5.7\lib\net452\VirtualizingWrapPanel.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -104,11 +107,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\CheckBoxGroup1.cs" />
     <Compile Include="Controls\CheckBoxGroup.xaml.cs">
       <DependentUpon>CheckBoxGroup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CheckBoxGroupItem.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="Models\ScreenCondition.cs" />
     <Compile Include="Models\Talent.cs" />
@@ -130,10 +131,6 @@
       <DependentUpon>ExcelScreeningView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\CheckBoxGroup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CheckBoxGroupStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

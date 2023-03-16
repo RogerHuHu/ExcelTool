@@ -94,9 +94,19 @@ namespace ExcelTool
             }
         }
 
-        public static void WriteTalentTitle(ExcelWorksheet sheet, ScreenCondition screenConditio)
+        public static void WriteTalentTitle(ExcelWorksheet sheet, ScreenCondition screenCondition)
         {
-
+            int index = 1;
+            for(int i = 0; i < screenCondition.ShowTitles.Length; i++)
+            {
+                if (screenCondition.ShowTitles[i])
+                {
+                    sheet.Cells[1, index].Value = titles[i];
+                    sheet.Cells[1, index].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                    sheet.Cells[1, index].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                    index++;
+                }
+            }
         }
 
         public static void WriteTalentInfo(ExcelWorksheet sheet, ICollection<Talent> talents)
@@ -157,6 +167,28 @@ namespace ExcelTool
                 sheet.Cells[startRow, 13].Value = talent.Group;
                 sheet.Cells[startRow, 13].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
+                startRow++;
+            }
+        }
+
+        public static void WriteTalentInfo(ExcelWorksheet sheet, ICollection<Talent> talents, ScreenCondition screenCondition)
+        {
+            int startRow = sheet.Dimension.End.Row + 1;
+            foreach (var talent in talents)
+            {
+                int index = 1;
+                for(int i = 0; i < screenCondition.ShowTitles.Length; i++)
+                {
+                    if (screenCondition.ShowTitles[i])
+                    {
+                        sheet.Cells[startRow, index].Value = talent[i];
+                        sheet.Cells[startRow, index].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        sheet.Cells[startRow, index].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        if (i == 6 || i == 7 || i == 8)
+                            sheet.Cells[startRow, index].Style.WrapText = true;
+                        index++;
+                    }
+                }
                 startRow++;
             }
         }

@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ExcelTool.Controls
 {
@@ -40,16 +29,6 @@ namespace ExcelTool.Controls
 
         public ObservableCollection<CheckBox> CheckBoxes { get; set; } = new ObservableCollection<CheckBox>();
 
-        //public static readonly DependencyProperty CheckBoxesProperty =
-        //    DependencyProperty.Register("CheckBoxes", typeof(ObservableCollection<CheckBox>), typeof(CheckBoxGroup),
-        //    new FrameworkPropertyMetadata(new ObservableCollection<CheckBox>(), null));
-
-        //public ObservableCollection<CheckBox> CheckBoxes
-        //{
-        //    get { return (ObservableCollection<CheckBox>)GetValue(CheckBoxesProperty); }
-        //    set { SetValue(CheckBoxesProperty, value); }
-        //}
-
         //定义一个依赖属性，表示是否全选
         public static readonly DependencyProperty IsAllCheckedProperty =
             DependencyProperty.Register("IsAllChecked", typeof(bool), typeof(CheckBoxGroup),
@@ -69,7 +48,6 @@ namespace ExcelTool.Controls
             DependencyProperty.Register("SelectedItems", typeof(List<object>), typeof(CheckBoxGroup),
                                         new FrameworkPropertyMetadata(new List<object>(), null));
 
-
         public List<object> SelectedItems
         {
             get { return (List<object>)GetValue(SelectedItemsProperty); }
@@ -77,6 +55,7 @@ namespace ExcelTool.Controls
         }
 
         #region 选中事件处理
+
         //当是否全选的属性值发生变化时，触发该方法
         private static void OnIsAllCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -142,7 +121,7 @@ namespace ExcelTool.Controls
             IsAllChecked = true;
         }
 
-        #endregion
+        #endregion 选中事件处理
 
         #region 集合变更事件处理
 
@@ -151,11 +130,11 @@ namespace ExcelTool.Controls
             var checkBoxGroup = d as CheckBoxGroup;
             checkBoxGroup.ItemsSource.CollectionChanged += checkBoxGroup.ItemsSource_CollectionChanged;
             checkBoxGroup.CheckBoxes.Clear();
-            CheckBox cb = new CheckBox() { Content = "全选", IsThreeState = true, Margin = new Thickness(5, 5, 0, 0) };
+            CheckBox cb = new CheckBox() { Content = "全选", IsThreeState = true, Margin = new Thickness(5, 5, 0, 0), Width = 200 };
             cb.Checked += checkBoxGroup.CheckBox_AllChecked;
             cb.Unchecked += checkBoxGroup.CheckBox_AllUnchecked;
             foreach (var item in checkBoxGroup.ItemsSource)
-                checkBoxGroup.CheckBoxes.Add(new CheckBox() { Content = item, IsThreeState = false, Margin = new Thickness(5, 5, 0, 0) });
+                checkBoxGroup.CheckBoxes.Add(new CheckBox() { Content = item, IsThreeState = false, Margin = new Thickness(5, 5, 0, 0), Width = 200 });
 
             checkBoxGroup.cbgItemsControl.ItemsSource = checkBoxGroup.CheckBoxes;
         }
@@ -165,14 +144,14 @@ namespace ExcelTool.Controls
             if (e.Action == NotifyCollectionChangedAction.Reset)
             {
                 CheckBoxes.Clear();
-                CheckBox cb = new CheckBox() { Content = "全选", IsThreeState = true, Margin = new Thickness(5,5,0,0) };
+                CheckBox cb = new CheckBox() { Content = "全选", IsThreeState = true, Margin = new Thickness(5, 5, 0, 0), Width = 200 };
                 cb.Checked += CheckBox_AllChecked;
                 cb.Unchecked += CheckBox_AllUnchecked;
                 CheckBoxes.Add(cb);
             }
             else if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                CheckBox cb = new CheckBox() { Content = e.NewItems[0], IsThreeState = false, Margin = new Thickness(5, 5, 0, 0) };
+                CheckBox cb = new CheckBox() { Content = e.NewItems[0], IsThreeState = false, Margin = new Thickness(5, 5, 0, 0), Width = 200 };
                 cb.Checked += CheckBox_Checked;
                 cb.Unchecked += CheckBox_Unchecked;
                 CheckBoxes.Add(cb);
@@ -221,6 +200,7 @@ namespace ExcelTool.Controls
         //            CheckBoxes.Remove(cb);
         //    }
         //}
-        #endregion
+
+        #endregion 集合变更事件处理
     }
 }

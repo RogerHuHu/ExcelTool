@@ -135,6 +135,30 @@
             set => group = value;
         }
 
+        public string this[int index]
+        {
+            get
+            {
+                switch(index)
+                {
+                    case 0: return CompetentDepartment;
+                    case 1: return School;
+                    case 2: return Institute;
+                    case 3: return TalentType;
+                    case 4: return Position;
+                    case 5: return Name;
+                    case 6: return ResearchInterestsKeywords;
+                    case 7: return ResearchInterests;
+                    case 8: return Remark;
+                    case 9: return AcademyOfScience;
+                    case 10: return ProfessionalTitle;
+                    case 11: return Project;
+                    case 12: return Group;
+                    default: return "";
+                }
+            }
+        }
+
         #endregion 属性
     }
 }

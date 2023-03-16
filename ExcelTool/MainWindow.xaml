@@ -7,9 +7,9 @@
     xmlns:hiic="http://hiiclibrary.com/"
     xmlns:local="clr-namespace:ExcelTool"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="人才信息筛选工具"
-    Width="800"
-    Height="800"
+    Title="人才信息筛选工具 V1.2"
+    d:DesignHeight="800"
+    d:DesignWidth="800"
     UseLayoutRounding="True"
     mc:Ignorable="d">
     <Grid>
@@ -17,7 +17,7 @@
             Margin="5"
             BorderThickness="0"
             Effect="{DynamicResource EffectShadow2}">
-            <WrapPanel>
+            <WrapPanel Margin="5">
                 <Button
                     Width="{Binding ButtonWidth}"
                     Margin="5,0,0,0"
