@@ -37,6 +37,7 @@ namespace ExcelTool
         public DelegateCommand ScreeningCmd { get; private set; }
         public DelegateCommand RemoveInvalidItemCmd { get; private set; }
         public DelegateCommand DeduplicationByNameCmd { get; private set; }
+        public DelegateCommand NewInfoArrangeCmd { get; private set; }
 
         #endregion 命令
 
@@ -48,6 +49,7 @@ namespace ExcelTool
             ScreeningCmd = new DelegateCommand(() => Screening());
             RemoveInvalidItemCmd = new DelegateCommand(() => RemoveInvalidItem());
             DeduplicationByNameCmd = new DelegateCommand(() => DeduplicationByName());
+            NewInfoArrangeCmd = new DelegateCommand(() => NewInfoArrange());
         }
 
         private void DocumentMerge()
@@ -68,6 +70,11 @@ namespace ExcelTool
         private void DeduplicationByName()
         {
             Dialog.Show(new DeduplicationByNameView());
+        }
+
+        private void NewInfoArrange()
+        {
+            Dialog.Show(new NewInfoArrangeView());
         }
         #endregion 方法
     }

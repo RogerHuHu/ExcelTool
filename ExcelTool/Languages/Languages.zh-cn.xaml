@@ -40,4 +40,5 @@
     <sys:String x:Key="ETAcademyOfScience">科学院</sys:String>
     <sys:String x:Key="ETProfessionalTitle">职称</sys:String>
     <sys:String x:Key="ETGroup">分组</sys:String>
+    <sys:String x:Key="ETNewInfoArrange">新表格信息整理</sys:String>
 </ResourceDictionary>

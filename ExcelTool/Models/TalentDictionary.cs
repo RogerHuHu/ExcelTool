@@ -1,5 +1,4 @@
-﻿using HIIUtils.String;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,14 +17,25 @@ namespace ExcelTool.Models
 
         public void Add(Talent talent)
         {
-            if (!string.IsNullOrEmpty(talent.Name) && !dic.ContainsKey(talent.Name))
-                dic.Add(talent.Name, talent);
+            if (!string.IsNullOrEmpty(talent.Name))
+            {
+                string key = talent.Name + talent.Phone;
+                if (dic.ContainsKey(key))
+                {
+                    Talent tmp = dic[key];
+                    string[] talentTypes = tmp.TalentType.Split("、".ToArray());
+                    if (!talentTypes.Contains(talent.TalentType))
+                        tmp.TalentType += "、" + talent.TalentType;
+                    return;
+                }
+                dic.Add(key, talent);
+            }
         }
 
         public void Remove(Talent talent)
         {
-            if (!string.IsNullOrEmpty(talent.Name) && dic.ContainsKey(talent.Name))
-                dic.Remove(talent.Name);
+            if (!string.IsNullOrEmpty(talent.Name) && dic.ContainsKey(talent.Name + talent.Phone))
+                dic.Remove(talent.Name + talent.Phone);
         }
 
         public void WriteToExcel(ExcelWorksheet sheet)
@@ -35,50 +45,50 @@ namespace ExcelTool.Models
 
         public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
         {
-            ICollection<Talent> talents = new List<Talent>();
-            foreach (var item in dic.Values)
-            {
-                if (item.ResearchInterestsKeywords == null) continue;
-                List<string> keywords = StringHelper.Split(item.ResearchInterestsKeywords, new string[] { "、" });
-                bool valid = false;
-                foreach (var keyword in keywords)
-                {
-                    if (screenCondition.ResearchInterestsKeywords.Count == 0 || screenCondition.ResearchInterestsKeywords.Contains(keyword))
-                    {
-                        valid = true;
-                        break;
-                    }
-                }
+            //ICollection<Talent> talents = new List<Talent>();
+            //foreach (var item in dic.Values)
+            //{
+            //    if (item.ResearchInterestsKeywords == null) continue;
+            //    List<string> keywords = StringHelper.Split(item.ResearchInterestsKeywords, new string[] { "、" });
+            //    bool valid = false;
+            //    foreach (var keyword in keywords)
+            //    {
+            //        if (screenCondition.ResearchInterestsKeywords.Count == 0 || screenCondition.ResearchInterestsKeywords.Contains(keyword))
+            //        {
+            //            valid = true;
+            //            break;
+            //        }
+            //    }
 
-                if (valid)
-                {
-                    if (screenCondition.Projects.Count == 0 || screenCondition.Projects.Contains(item.Project))
-                        talents.Add(item);
-                }
-            }
+            //    if (valid)
+            //    {
+            //        if (screenCondition.Projects.Count == 0 || screenCondition.Projects.Contains(item.Project))
+            //            talents.Add(item);
+            //    }
+            //}
 
-            ExcelHelper.WriteTalentInfo(sheet, talents, screenCondition);
+            //ExcelHelper.WriteTalentInfo(sheet, talents, screenCondition);
         }
 
         public List<string> GetResearchInterestsKeywords()
         {
             List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-            {
-                if (item.ResearchInterestsKeywords != null)
-                    result.AddRange(StringHelper.Split(item.ResearchInterestsKeywords, new string[] { "、" }));
-            }
+            //foreach (var item in dic.Values)
+            //{
+            //    if (item.ResearchInterestsKeywords != null)
+            //        result.AddRange(StringHelper.Split(item.ResearchInterestsKeywords, new string[] { "、" }));
+            //}
             return result;
         }
 
         public List<string> GetProjects()
         {
             List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-            {
-                if(item.Project != null)
-                    result.Add(item.Project);
-            }
+            //foreach (var item in dic.Values)
+            //{
+            //    if(item.Project != null)
+            //        result.Add(item.Project);
+            //}
             return result;
         }
 
@@ -90,11 +100,11 @@ namespace ExcelTool.Models
         }
     }
 
-    public class PositionDictionary
+    public class InstituteDictionary
     {
         private Dictionary<string, TalentNameDictionary> dic = null;
 
-        public PositionDictionary()
+        public InstituteDictionary()
         {
             dic = new Dictionary<string, TalentNameDictionary>();
         }
@@ -103,244 +113,14 @@ namespace ExcelTool.Models
 
         public void Add(Talent talent)
         {
-            TalentNameDictionary tmpDic;
-            if (dic.ContainsKey(talent.Position))
-            {
-                tmpDic = dic[talent.Position];
-            }
-            else
-            {
-                tmpDic = new TalentNameDictionary();
-                dic.Add(talent.Position, tmpDic);
-            }
-
-            tmpDic.Add(talent);
-        }
-
-        public void Remove(Talent talent)
-        {
-            if (dic.ContainsKey(talent.Position))
-            {
-                dic[talent.Position].Remove(talent);
-                if (dic[talent.Position].Count == 0)
-                    dic.Remove(talent.Position);
-            }
-        }
-
-        public void WriteToExcel(ExcelWorksheet sheet)
-        {
-            foreach (var item in dic.Values)
-            {
-                int startRow = sheet.Dimension.End.Row + 1;
-                item.WriteToExcel(sheet);
-                int endRow = sheet.Dimension.End.Row;
-                if (endRow < startRow) continue;
-                sheet.Cells[startRow, 5, endRow, 5].Merge = true;
-            }
-        }
-
-        public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
-        {
-            foreach (var item in dic)
-            {
-                int startRow = sheet.Dimension.End.Row + 1;
-                if (screenCondition.Positions.Count > 0 && !screenCondition.Positions.Contains(item.Key))
-                    continue;
-                item.Value.WriteToExcel(sheet, screenCondition);
-                int endRow = sheet.Dimension.End.Row;
-                if (endRow < startRow) continue;
-                sheet.Cells[startRow, 5, endRow, 5].Merge = true;
-                sheet.Cells[startRow, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                sheet.Cells[startRow, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-            }
-        }
-
-        public List<string> GetPositions()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Keys)
-                result.Add(item);
-            return result;
-        }
-
-        public List<string> GetResearchInterestsKeywords()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetResearchInterestsKeywords());
-            return result;
-        }
-
-        public List<string> GetProjects()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetProjects());
-            return result;
-        }
-
-        public Talent GetNextTalent()
-        {
-            Talent talent = null;
-            while (dic.Count > 0)
-            {
-                var item = dic.ElementAt(0);
-                if (item.Value.Count == 0)
-                {
-                    dic.Remove(item.Key);
-                }
-                else
-                {
-                    talent = dic.ElementAt(0).Value.GetNextTalent();
-                    if (talent == null) continue;
-                    break;
-                }
-            }
-
-            return talent;
-        }
-    }
-
-    public class TalentTypeDictionary
-    {
-        private Dictionary<string, PositionDictionary> dic = null;
-
-        public TalentTypeDictionary()
-        {
-            dic = new Dictionary<string, PositionDictionary>();
-        }
-
-        public int Count => dic.Count;
-
-        public void Add(Talent talent)
-        {
-            PositionDictionary tmpDic;
-            if (dic.ContainsKey(talent.TalentType))
-            {
-                tmpDic = dic[talent.TalentType];
-            }
-            else
-            {
-                tmpDic = new PositionDictionary();
-                dic.Add(talent.TalentType, tmpDic);
-            }
-
-            tmpDic.Add(talent);
-        }
-
-        public void Remove(Talent talent)
-        {
-            if (dic.ContainsKey(talent.TalentType))
-            {
-                dic[talent.TalentType].Remove(talent);
-                if (dic[talent.TalentType].Count == 0)
-                    dic.Remove(talent.TalentType);
-            }
-        }
-
-        public void WriteToExcel(ExcelWorksheet sheet)
-        {
-            foreach (var item in dic.Values)
-            {
-                int startRow = sheet.Dimension.End.Row + 1;
-                item.WriteToExcel(sheet);
-                int endRow = sheet.Dimension.End.Row;
-                if (endRow < startRow) continue;
-                sheet.Cells[startRow, 4, endRow, 4].Merge = true;
-            }
-        }
-
-        public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
-        {
-            foreach (var item in dic)
-            {
-                int startRow = sheet.Dimension.End.Row + 1;
-                if (screenCondition.TalentTypes.Count > 0 && !screenCondition.TalentTypes.Contains(item.Key))
-                    continue;
-                item.Value.WriteToExcel(sheet, screenCondition);
-                int endRow = sheet.Dimension.End.Row;
-                if (endRow < startRow) continue;
-                sheet.Cells[startRow, 4, endRow, 4].Merge = true;
-                sheet.Cells[startRow, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                sheet.Cells[startRow, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-            }
-        }
-
-        public List<string> GetTalentTypes()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Keys)
-                result.Add(item);
-            return result;
-        }
-
-        public List<string> GetPositions()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetPositions());
-            return result;
-        }
-
-        public List<string> GetResearchInterestsKeywords()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetResearchInterestsKeywords());
-            return result;
-        }
-
-        public List<string> GetProjects()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetProjects());
-            return result;
-        }
-
-        public Talent GetNextTalent()
-        {
-            Talent talent = null;
-            while(dic.Count > 0)
-            {
-                var item = dic.ElementAt(0);
-                if (item.Value.Count == 0)
-                {
-                    dic.Remove(item.Key);
-                }
-                else
-                {
-                    talent = dic.ElementAt(0).Value.GetNextTalent();
-                    if (talent == null) continue;
-                    break;
-                }
-            }
-
-            return talent;
-        }
-    }
-
-    public class InstituteDictionary
-    {
-        private Dictionary<string, TalentTypeDictionary> dic = null;
-
-        public InstituteDictionary()
-        {
-            dic = new Dictionary<string, TalentTypeDictionary>();
-        }
-
-        public int Count => dic.Count;
-
-        public void Add(Talent talent)
-        {
-            TalentTypeDictionary tmpDic = null;
+            TalentNameDictionary tmpDic = null;
             if (dic.ContainsKey(talent.Institute))
             {
                 tmpDic = dic[talent.Institute];
             }
             else
             {
-                tmpDic = new TalentTypeDictionary();
+                tmpDic = new TalentNameDictionary();
                 dic.Add(talent.Institute, tmpDic);
             }
 
@@ -360,70 +140,36 @@ namespace ExcelTool.Models
         public void WriteToExcel(ExcelWorksheet sheet)
         {
             foreach (var item in dic.Values)
+            {
+                int startRow = sheet.Dimension.End.Row + 1;
                 item.WriteToExcel(sheet);
+                int endRow = sheet.Dimension.End.Row;
+                if (endRow < startRow) continue;
+                sheet.Cells[startRow, 2, endRow, 2].Merge = true;
+            }
         }
 
         public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
         {
             foreach (var item in dic)
             {
-                //if (screenCondition.Institutes.Count > 0 && !screenCondition.Institutes.Contains(item.Key))
-                //    continue;
-                //item.Value.WriteToExcel(sheet, screenCondition);
-
-                if(screenCondition.Institutes.Count == 0)
-                    item.Value.WriteToExcel(sheet, screenCondition);
-                else
-                {
-                    foreach(string str in screenCondition.Institutes)
-                    {
-                        if(item.Key.Contains(str))
-                        {
-                            item.Value.WriteToExcel(sheet, screenCondition);
-                            break;
-                        }
-                    }
-                }
+                int startRow = sheet.Dimension.End.Row + 1;
+                if (screenCondition.Schools.Count > 0 && !screenCondition.Schools.Contains(item.Key))
+                    continue;
+                item.Value.WriteToExcel(sheet, screenCondition);
+                int endRow = sheet.Dimension.End.Row;
+                if (endRow < startRow) continue;
+                sheet.Cells[startRow, 2, endRow, 2].Merge = true;
+                sheet.Cells[startRow, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                sheet.Cells[startRow, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             }
         }
 
-        public List<string> GetInstitutes()
+        public List<string> GetSchools()
         {
             List<string> result = new List<string>();
             foreach (var item in dic.Keys)
                 result.Add(item);
-            return result;
-        }
-
-        public List<string> GetTalentTypes()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetTalentTypes());
-            return result;
-        }
-
-        public List<string> GetPositions()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetPositions());
-            return result;
-        }
-
-        public List<string> GetResearchInterestsKeywords()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetResearchInterestsKeywords());
-            return result;
-        }
-
-        public List<string> GetProjects()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetProjects());
             return result;
         }
 
@@ -494,7 +240,7 @@ namespace ExcelTool.Models
                 item.WriteToExcel(sheet);
                 int endRow = sheet.Dimension.End.Row;
                 if (endRow < startRow) continue;
-                sheet.Cells[startRow, 2, endRow, 2].Merge = true;
+                sheet.Cells[startRow, 1, endRow, 1].Merge = true;
             }
         }
 
@@ -522,209 +268,6 @@ namespace ExcelTool.Models
             return result;
         }
 
-        public List<string> GetInstitutes()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetInstitutes());
-            return result;
-        }
-
-        public List<string> GetTalentTypes()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetTalentTypes());
-            return result;
-        }
-
-        public List<string> GetPositions()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetPositions());
-            return result;
-        }
-
-        public List<string> GetResearchInterestsKeywords()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetResearchInterestsKeywords());
-            return result;
-        }
-
-        public List<string> GetProjects()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Values)
-                result.AddRange(item.GetProjects());
-            return result;
-        }
-
-        public Talent GetNextTalent()
-        {
-            Talent talent = null;
-            while (dic.Count > 0)
-            {
-                var item = dic.ElementAt(0);
-                if (item.Value.Count == 0)
-                {
-                    dic.Remove(item.Key);
-                }
-                else
-                {
-                    talent = dic.ElementAt(0).Value.GetNextTalent();
-                    if (talent == null) continue;
-                    break;
-                }
-            }
-
-            return talent;
-        }
-    }
-
-    public class CompetentDepartmentDictionary
-    {
-        private Dictionary<string, SchoolDictionary> dic = null;
-
-        public CompetentDepartmentDictionary()
-        {
-            dic = new Dictionary<string, SchoolDictionary>();
-        }
-
-        public int Count => dic.Count;
-
-        public void Add(Talent talent)
-        {
-            SchoolDictionary tmpDic = null;
-            if (dic.ContainsKey(talent.CompetentDepartment))
-            {
-                tmpDic = dic[talent.CompetentDepartment];
-            }
-            else
-            {
-                tmpDic = new SchoolDictionary();
-                dic.Add(talent.CompetentDepartment, tmpDic);
-            }
-
-            tmpDic.Add(talent);
-        }
-
-        public void Remove(Talent talent)
-        {
-            if (dic.ContainsKey(talent.CompetentDepartment))
-            {
-                dic[talent.CompetentDepartment].Remove(talent);
-                if (dic[talent.CompetentDepartment].Count == 0)
-                    dic.Remove(talent.CompetentDepartment);
-            }
-        }
-
-        public void WriteToExcel(ExcelWorksheet sheet)
-        {
-            foreach (var item in dic.Values)
-            {
-                int startRow = sheet.Dimension.End.Row + 1;
-                item.WriteToExcel(sheet);
-                int endRow = sheet.Dimension.End.Row;
-                if (endRow < startRow) continue;
-                sheet.Cells[startRow, 1, endRow, 1].Merge = true;
-                sheet.Cells[startRow, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                sheet.Cells[startRow, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-            }
-        }
-
-        public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
-        {
-            foreach (var item in dic)
-            {
-                int startRow = sheet.Dimension.End.Row + 1;
-                if (screenCondition.CompetentDepartments.Count > 0 && !screenCondition.CompetentDepartments.Contains(item.Key))
-                    continue;
-                item.Value.WriteToExcel(sheet, screenCondition);
-                int endRow = sheet.Dimension.End.Row;
-                if (endRow < startRow) continue;
-                sheet.Cells[startRow, 1, endRow, 1].Merge = true;
-                sheet.Cells[startRow, 1].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                sheet.Cells[startRow, 1].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-            }
-        }
-
-        public List<string> GetCompetentDepartments()
-        {
-            List<string> result = new List<string>();
-            foreach (var item in dic.Keys)
-                result.Add(item);
-            return result;
-        }
-
-        public List<string> GetSchools()
-        {
-            HashSet<string> set = new HashSet<string>();
-            foreach (var value in dic.Values)
-            {
-                foreach (var item in value.GetSchools())
-                    set.Add(item);
-            }
-            return set.ToList();
-        }
-
-        public List<string> GetInstitutes()
-        {
-            HashSet<string> set = new HashSet<string>();
-            foreach (var value in dic.Values)
-            {
-                foreach (var item in value.GetInstitutes())
-                    set.Add(item);
-            }
-            return set.ToList();
-        }
-
-        public List<string> GetTalentTypes()
-        {
-            HashSet<string> set = new HashSet<string>();
-            foreach (var value in dic.Values)
-            {
-                foreach (var item in value.GetTalentTypes())
-                    set.Add(item);
-            }
-            return set.ToList();
-        }
-
-        public List<string> GetPositions()
-        {
-            HashSet<string> set = new HashSet<string>();
-            foreach (var value in dic.Values)
-            {
-                foreach (var item in value.GetPositions())
-                    set.Add(item);
-            }
-            return set.ToList();
-        }
-
-        public List<string> GetResearchInterestsKeywords()
-        {
-            HashSet<string> set = new HashSet<string>();
-            foreach (var value in dic.Values)
-            {
-                foreach (var item in value.GetResearchInterestsKeywords())
-                    set.Add(item);
-            }
-            return set.ToList();
-        }
-
-        public List<string> GetProjects()
-        {
-            HashSet<string> set = new HashSet<string>();
-            foreach (var value in dic.Values)
-            {
-                foreach (var item in value.GetProjects())
-                    set.Add(item);
-            }
-            return set.ToList();
-        }
-
         public Talent GetNextTalent()
         {
             Talent talent = null;
@@ -749,11 +292,11 @@ namespace ExcelTool.Models
 
     public class TalentDictionary
     {
-        private CompetentDepartmentDictionary dic = null;
+        private SchoolDictionary dic = null;
 
         public TalentDictionary()
         {
-            dic = new CompetentDepartmentDictionary();
+            dic = new SchoolDictionary();
         }
 
         public void Add(Talent talent)
@@ -784,39 +327,9 @@ namespace ExcelTool.Models
                 dic.Add(talent);
         }
 
-        public List<string> GetCompetentDepartments()
-        {
-            return dic.GetCompetentDepartments();
-        }
-
         public List<string> GetSchools()
         {
             return dic.GetSchools();
-        }
-
-        public List<string> GetInstitutes()
-        {
-            return dic.GetInstitutes();
-        }
-
-        public List<string> GetTalentTypes()
-        {
-            return dic.GetTalentTypes();
-        }
-
-        public List<string> GetPositions()
-        {
-            return dic.GetPositions();
-        }
-
-        public List<string> GetResearchInterestsKeywords()
-        {
-            return dic.GetResearchInterestsKeywords();
-        }
-
-        public List<string> GetProjects()
-        {
-            return dic.GetProjects();
         }
 
         public Talent GetNextTalent()

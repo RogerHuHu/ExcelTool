@@ -118,6 +118,7 @@
     <Compile Include="ViewModels\ExcelMergeViewModel.cs" />
     <Compile Include="ViewModels\ExcelRemoveInvalidItemViewModel.cs" />
     <Compile Include="ViewModels\ExcelScreeningViewModel.cs" />
+    <Compile Include="ViewModels\NewInfoArrangeViewModel.cs" />
     <Compile Include="Views\DeduplicationByNameView.xaml.cs">
       <DependentUpon>DeduplicationByNameView.xaml</DependentUpon>
     </Compile>
@@ -129,6 +130,9 @@
     </Compile>
     <Compile Include="Views\ExcelScreeningView.xaml.cs">
       <DependentUpon>ExcelScreeningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewInfoArrangeView.xaml.cs">
+      <DependentUpon>NewInfoArrangeView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\CheckBoxGroup.xaml">
       <SubType>Designer</SubType>
@@ -164,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ExcelScreeningView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewInfoArrangeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

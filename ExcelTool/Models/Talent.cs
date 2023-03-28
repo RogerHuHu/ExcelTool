@@ -5,19 +5,19 @@
         #region 变量
 
         private bool isSelected;
-        private string competentDepartment; // 主管部门
         private string school; // 学校
         private string institute; // 学院
         private string talentType; // 人才类别
         private string name; // 姓名
-        private string position; // 职位
-        private string researchInterestsKeywords; // 研究方向关键词
-        private string researchInterests; // 详细研究方向
+        private string phone; // 电话
+        private string status; // 状态
+        private string cad; // 辅助设计
+        private string computerSoftware; // 计算机软件
+        private string computerApplication; // 计算机应用
+        private string developmentEnvironment; // 开发环境
+        private string developmentTechnology; // 开发技术
+        private string softwareDevelopment; // 软件开发
         private string remark; // 备注
-        private string academyOfScience; // 科学院
-        private string professionalTitle; // 职称
-        private string project; // 国家重点研发项目
-        private string group; // 国家重点研发项目分组
 
         #endregion 变量
 
@@ -28,23 +28,24 @@
             isSelected = false;
         }
 
-        public Talent(string competentDepartment, string school, string institute, string talentType, string position,
-                      string name, string researchInterestsKeywords, string researchInterests, string remark,
-                      string academyOfScience, string professionalTitle, string project, string group) : this()
+        public Talent(string school, string institute, string talentType,
+                      string name, string phone, string status, string cad,
+                      string computerSoftware, string computerApplication, string developmentEnvironment,
+                      string developmentTechnology, string softwareDevelopment, string remark) : this()
         {
-            this.competentDepartment = competentDepartment;
             this.school = school;
             this.institute = institute == null ? "未知" : institute;
             this.talentType = talentType;
             this.name = name;
-            this.position = position;
-            this.researchInterestsKeywords = researchInterestsKeywords;
-            this.researchInterests = researchInterests;
+            this.phone = phone;
+            this.status = status;
+            this.cad = cad;
+            this.computerSoftware = computerSoftware;
+            this.computerApplication = computerApplication;
+            this.developmentEnvironment = developmentEnvironment;
+            this.developmentTechnology = developmentTechnology;
+            this.softwareDevelopment = softwareDevelopment;
             this.remark = remark;
-            this.academyOfScience = academyOfScience;
-            this.professionalTitle = professionalTitle;
-            this.project = project;
-            this.group = group;
         }
 
         #endregion 构造函数
@@ -55,12 +56,6 @@
         {
             get => isSelected;
             set => isSelected = value;
-        }
-
-        public string CompetentDepartment
-        {
-            get => competentDepartment;
-            set => competentDepartment = value;
         }
 
         public string School
@@ -87,22 +82,52 @@
             set => name = value;
         }
 
-        public string Position
+        public string Phone
         {
-            get => position;
-            set => position = value;
+            get => phone;
+            set => phone = value;
         }
 
-        public string ResearchInterestsKeywords
+        public string Status
         {
-            get => researchInterestsKeywords;
-            set => researchInterestsKeywords = value;
+            get => status;
+            set => status = value;
         }
 
-        public string ResearchInterests
+        public string CAD
         {
-            get => researchInterests;
-            set => researchInterests = value;
+            get => cad;
+            set => cad = value;
+        }
+
+        public string ComputerSoftware
+        {
+            get => computerSoftware;
+            set => computerSoftware = value;
+        }
+
+        public string ComputerApplication
+        {
+            get => computerApplication;
+            set => computerApplication = value;
+        }
+
+        public string DevelopmentEnvironment
+        {
+            get => developmentEnvironment;
+            set => developmentEnvironment = value;
+        }
+
+        public string DevelopmentTechnology
+        {
+            get => developmentTechnology;
+            set => developmentTechnology = value;
+        }
+
+        public string SoftwareDevelopment
+        {
+            get => softwareDevelopment;
+            set => softwareDevelopment = value;
         }
 
         public string Remark
@@ -111,49 +136,25 @@
             set => remark = value;
         }
 
-        public string AcademyOfScience
-        {
-            get => academyOfScience;
-            set => academyOfScience = value;
-        }
-
-        public string ProfessionalTitle
-        {
-            get => professionalTitle;
-            set => professionalTitle = value;
-        }
-
-        public string Project
-        {
-            get => project;
-            set => project = value;
-        }
-
-        public string Group
-        {
-            get => group;
-            set => group = value;
-        }
-
         public string this[int index]
         {
             get
             {
-                switch(index)
+                switch (index)
                 {
-                    case 0: return CompetentDepartment;
-                    case 1: return School;
-                    case 2: return Institute;
-                    case 3: return TalentType;
-                    case 4: return Position;
-                    case 5: return Name;
-                    case 6: return ResearchInterestsKeywords;
-                    case 7: return ResearchInterests;
-                    case 8: return Remark;
-                    case 9: return AcademyOfScience;
-                    case 10: return ProfessionalTitle;
-                    case 11: return Project;
-                    case 12: return Group;
+                    case 0: return School;
+                    case 1: return Institute;
+                    case 2: return TalentType;
+                    case 3: return Name;
+                    case 4: return Phone;
+                    case 5: return Status;
+                    case 6: return CAD;
+                    case 7: return ComputerSoftware;
+                    case 8: return ComputerApplication;
+                    case 9: return DevelopmentEnvironment;
+                    case 10: return DevelopmentTechnology;
+                    case 11: return SoftwareDevelopment;
+                    case 12: return Remark;
                     default: return "";
                 }
             }

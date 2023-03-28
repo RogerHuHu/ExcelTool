@@ -339,33 +339,33 @@ namespace ExcelTool.ViewModels
             dic = new TalentDictionary();
             ExcelHelper.ReadTalentInfo(OldFilePath, dic);
 
-            CompetentDepartments.Clear();
-            foreach (var cd in dic.GetCompetentDepartments())
-                CompetentDepartments.Add(cd);
+            //CompetentDepartments.Clear();
+            //foreach (var cd in dic.GetCompetentDepartments())
+            //    CompetentDepartments.Add(cd);
 
             Schools.Clear();
             foreach (var school in dic.GetSchools())
                 Schools.Add(school);
 
-            Institutes.Clear();
-            foreach (var institute in dic.GetInstitutes())
-                Institutes.Add(institute);
+            //Institutes.Clear();
+            //foreach (var institute in dic.GetInstitutes())
+            //    Institutes.Add(institute);
 
-            TalentTypes.Clear();
-            foreach (var talentType in dic.GetTalentTypes())
-                TalentTypes.Add(talentType);
+            //TalentTypes.Clear();
+            //foreach (var talentType in dic.GetTalentTypes())
+            //    TalentTypes.Add(talentType);
 
-            Positions.Clear();
-            foreach(var position in dic.GetPositions())
-                Positions.Add(position);
+            //Positions.Clear();
+            //foreach(var position in dic.GetPositions())
+            //    Positions.Add(position);
 
-            ResearchInterestsKeywords.Clear();
-            foreach (var researchInterestKeyword in dic.GetResearchInterestsKeywords())
-                ResearchInterestsKeywords.Add(researchInterestKeyword);
+            //ResearchInterestsKeywords.Clear();
+            //foreach (var researchInterestKeyword in dic.GetResearchInterestsKeywords())
+            //    ResearchInterestsKeywords.Add(researchInterestKeyword);
 
-            Projects.Clear();
-            foreach(var project in dic.GetProjects())
-                Projects.Add(project);
+            //Projects.Clear();
+            //foreach(var project in dic.GetProjects())
+            //    Projects.Add(project);
         }
 
         private void SelectOldFile()

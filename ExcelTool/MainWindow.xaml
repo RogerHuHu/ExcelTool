@@ -46,6 +46,13 @@
                     Content="{hiic:Lang Name=ETDeduplicationByName}"
                     FontSize="{DynamicResource FontSize4}"
                     Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    Width="130"
+                    Margin="5,0,0,0"
+                    Command="{Binding NewInfoArrangeCmd}"
+                    Content="{hiic:Lang Name=ETNewInfoArrange}"
+                    FontSize="{DynamicResource FontSize4}"
+                    Style="{StaticResource ButtonSuccess}" />
             </WrapPanel>
         </hc:Card>
     </Grid>
