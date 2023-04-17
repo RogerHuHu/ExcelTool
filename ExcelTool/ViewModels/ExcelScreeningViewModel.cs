@@ -3,6 +3,7 @@ using HandyControl.Controls;
 using HIIUtils.Commands;
 using HIIUtils.HIIFile;
 using HIIUtils.MVVM;
+using HIIUtils.String;
 using Microsoft.Win32;
 using Microsoft.Xaml.Behaviors.Media;
 using OfficeOpenXml;
@@ -48,23 +49,23 @@ namespace ExcelTool.ViewModels
         TalentDictionary dic = null;
 
         private bool showtTalentType = true;
-        private bool showPosition = true;
+        private bool showPhone = true;
         private bool showName = true;
-        private bool showResearchInterestsKeywords = true;
-        private bool showResearchInterests = true;
+        private bool showStatus = true;
         private bool showRemark = true;
-        private bool showAcademyOfScience = true;
-        private bool showProfessionalTitle = true;
-        private bool showProject = true;
-        private bool showGroup = true;
 
-        private ObservableCollection<string> competentDepartments = null;
+        private ObservableCollection<string> schoolBase = null;
         private ObservableCollection<string> schools = null;
+        private ObservableCollection<string> instituteBase = null;
         private ObservableCollection<string> institutes = null;
         private ObservableCollection<string> talentTypes = null;
-        private ObservableCollection<string> positions = null;
-        private ObservableCollection<string> researchInterestsKeywords = null;
-        private ObservableCollection<string> projects = null;
+        private ObservableCollection<string> statuses = null;
+        private ObservableCollection<string> cads = null;
+        private ObservableCollection<string> computerSoftwares = null;
+        private ObservableCollection<string> computerApplications = null;
+        private ObservableCollection<string> developEnvironments = null;
+        private ObservableCollection<string> developTechnologies = null;
+        private ObservableCollection<string> softwareDevelopments = null;
 
         private string institutesKeywords;
         private ScreenCondition screenCondition;
@@ -103,14 +104,14 @@ namespace ExcelTool.ViewModels
             }
         }
 
-        public bool ShowPosition
+        public bool ShowPhone
         {
-            get => showPosition;
+            get => showPhone;
             set
             {
-                if (showPosition != value)
+                if (showPhone != value)
                 {
-                    showPosition = value;
+                    showPhone = value;
                     screenCondition.ShowTitles[4] = value;
                 }
             }
@@ -129,28 +130,15 @@ namespace ExcelTool.ViewModels
             }
         }
 
-        public bool ShowResearchInterestsKeywords
+        public bool ShowStatus
         {
-            get => showResearchInterestsKeywords;
+            get => showStatus;
             set
             {
-                if (showResearchInterestsKeywords != value)
+                if (showStatus != value)
                 {
-                    showResearchInterestsKeywords = value;
+                    showStatus = value;
                     screenCondition.ShowTitles[6] = value;
-                }
-            }
-        }
-
-        public bool ShowResearchInterests
-        {
-            get => showResearchInterests;
-            set
-            {
-                if (showResearchInterests != value)
-                {
-                    showResearchInterests = value;
-                    screenCondition.ShowTitles[7] = value;
                 }
             }
         }
@@ -168,65 +156,13 @@ namespace ExcelTool.ViewModels
             }
         }
 
-        public bool ShowAcademyOfScience
-        {
-            get => showAcademyOfScience;
-            set
-            {
-                if (showAcademyOfScience != value)
-                {
-                    showAcademyOfScience = value;
-                    screenCondition.ShowTitles[9] = value;
-                }
-            }
-        }
-
-        public bool ShowProfessionalTitle
-        {
-            get => showProfessionalTitle;
-            set
-            {
-                if (showProfessionalTitle != value)
-                {
-                    showProfessionalTitle = value;
-                    screenCondition.ShowTitles[10] = value;
-                }
-            }
-        }
-
-        public bool ShowProject
-        {
-            get => showProject;
-            set
-            {
-                if (showProject != value)
-                {
-                    showProject = value;
-                    screenCondition.ShowTitles[11] = value;
-                }
-            }
-        }
-
-        public bool ShowGroup
-        {
-            get => showGroup;
-            set
-            {
-                if (showGroup != value)
-                {
-                    showGroup = value;
-                    screenCondition.ShowTitles[12] = value;
-                }
-            }
-        }
-
-        public ObservableCollection<string> CompetentDepartments
+        public ObservableCollection<string> SchoolBase
         {
             get
             {
-                if(competentDepartments == null)
-                    competentDepartments = new ObservableCollection<string>();
-                return competentDepartments;
+                if (schoolBase == null)
+                    schoolBase = new ObservableCollection<string>();
+                return schoolBase;
             }
         }
 
@@ -237,6 +173,16 @@ namespace ExcelTool.ViewModels
                 if (schools == null)
                     schools = new ObservableCollection<string>();
                 return schools;
+            }
+        }
+
+        public ObservableCollection<string> InstituteBase
+        {
+            get
+            {
+                if (instituteBase == null)
+                    instituteBase = new ObservableCollection<string>();
+                return instituteBase;
             }
         }
 
@@ -260,33 +206,73 @@ namespace ExcelTool.ViewModels
             }
         }
 
-        public ObservableCollection<string> Positions
+        public ObservableCollection<string> Statuses
         {
             get
             {
-                if (positions == null)
-                    positions = new ObservableCollection<string>();
-                return positions;
+                if (statuses == null)
+                    statuses = new ObservableCollection<string>();
+                return statuses;
             }
         }
 
-        public ObservableCollection<string> ResearchInterestsKeywords
+        public ObservableCollection<string> CADs
         {
             get
             {
-                if (researchInterestsKeywords == null)
-                    researchInterestsKeywords = new ObservableCollection<string>();
-                return researchInterestsKeywords;
+                if (cads == null)
+                    cads = new ObservableCollection<string>();
+                return cads;
             }
         }
 
-        public ObservableCollection<string> Projects
+        public ObservableCollection<string> ComputerSoftwares
         {
             get
             {
-                if(projects == null)
-                    projects = new ObservableCollection<string>();
-                return projects;
+                if(computerSoftwares == null)
+                    computerSoftwares = new ObservableCollection<string>();
+                return computerSoftwares;
+            }
+        }
+
+        public ObservableCollection<string> ComputerApplications
+        {
+            get
+            {
+                if (computerApplications == null)
+                    computerApplications = new ObservableCollection<string>();
+                return computerApplications;
+            }
+        }
+
+        public ObservableCollection<string> DevelopEnvironments
+        {
+            get
+            {
+                if(developEnvironments == null)
+                    developEnvironments= new ObservableCollection<string>();
+                return developEnvironments;
+            }
+        }
+
+        public ObservableCollection<string> DevelopTechnologies
+        {
+            get
+            {
+                if(developTechnologies == null)
+                    developTechnologies= new ObservableCollection<string>();
+                return developTechnologies;
+            }
+        }
+
+        public ObservableCollection<string> SoftwareDevelopments
+        {
+            get
+            {
+                if(softwareDevelopments == null)
+                    softwareDevelopments = new ObservableCollection<string>();
+                return softwareDevelopments;
             }
         }
 
@@ -308,13 +294,18 @@ namespace ExcelTool.ViewModels
         #region 命令
         public DelegateCommand SelectOldFileCmd { get; private set; }
         public DelegateCommand SelectNewFileCmd { get; private set; }
-        public DelegateCommand<IList<object>> CompetentDepartmentSelectionChanged { get; private set; }
+        public DelegateCommand<string> SchoolSearchCmd { get; private set; }
         public DelegateCommand<IList<object>> SchoolSelectionChanged { get; private set; }
-        public DelegateCommand<IList<object>> InstitutSelectionChanged { get; private set; }
+        public DelegateCommand<string> InstituteSearchCmd { get; private set; }
+        public DelegateCommand<IList<object>> InstituteSelectionChanged { get; private set; }
         public DelegateCommand<IList<object>> TalentTypeSelectionChanged { get; private set; }
-        public DelegateCommand<IList<object>> PositionSelectionChanged { get; private set; }
-        public DelegateCommand<IList<object>> ResearchInterestsKeywordsSelectionChanged { get; private set; }
-        public DelegateCommand<IList<object>> ProjectSelectionChanged { get; private set; }
+        public DelegateCommand<IList<object>> StatusSelectionChanged { get; private set; }
+        public DelegateCommand<IList<object>> CADSelectionChanged { get; private set; }
+        public DelegateCommand<IList<object>> ComputerSoftwareSelectionChanged { get; private set; }
+        public DelegateCommand<IList<object>> ComputerApplicationSelectionChanged { get; private set; }
+        public DelegateCommand<IList<object>> DevelopEnvironmentSelectionChanged { get; private set; }
+        public DelegateCommand<IList<object>> DevelopTechnologySelectionChanged { get; private set; }
+        public DelegateCommand<IList<object>> SoftwareDevelopmentSelectionChanged { get; private set; }
         public DelegateCommand ConfirmCmd { get; private set; }
         #endregion
 
@@ -324,13 +315,18 @@ namespace ExcelTool.ViewModels
             screenCondition = new ScreenCondition();
             SelectOldFileCmd = new DelegateCommand(() => SelectOldFile());
             SelectNewFileCmd = new DelegateCommand(() => SelectNewFile());
-            CompetentDepartmentSelectionChanged = new DelegateCommand<IList<object>>(OnCompetentDepartmentSelectionChanged);
+            SchoolSearchCmd = new DelegateCommand<string>(SearchSchool);
             SchoolSelectionChanged = new DelegateCommand<IList<object>>(OnSchoolSelectionChanged);
-            InstitutSelectionChanged = new DelegateCommand<IList<object>>(OnInstituteSelectionChanged);
+            InstituteSearchCmd = new DelegateCommand<string>(SearchInstitute);
+            InstituteSelectionChanged = new DelegateCommand<IList<object>>(OnInstituteSelectionChanged);
             TalentTypeSelectionChanged = new DelegateCommand<IList<object>>(OnTalentTypeSelectionChanged);
-            PositionSelectionChanged = new DelegateCommand<IList<object>>(OnPositionSelectionChanged);
-            ResearchInterestsKeywordsSelectionChanged = new DelegateCommand<IList<object>>(OnResearchInterestsKeywordSelectionChanged);
-            ProjectSelectionChanged = new DelegateCommand<IList<object>>(OnProjectSelectionChanged);
+            StatusSelectionChanged = new DelegateCommand<IList<object>>(OnStatusSelectionChanged);
+            CADSelectionChanged = new DelegateCommand<IList<object>>(OnCADSelectionChanged);
+            ComputerSoftwareSelectionChanged = new DelegateCommand<IList<object>>(OnComputerSoftwareSelectionChanged);
+            ComputerApplicationSelectionChanged = new DelegateCommand<IList<object>>(OnComputerApplicationSelectionChanged);
+            DevelopEnvironmentSelectionChanged = new DelegateCommand<IList<object>>(OnDevelopEnvironmentSelectionChanged);
+            DevelopTechnologySelectionChanged = new DelegateCommand<IList<object>>(OnDevelopTechnologySelectionChanged);
+            SoftwareDevelopmentSelectionChanged = new DelegateCommand<IList<object>>(OnSoftwareDevelopmentSelectionChanged);
             ConfirmCmd = new DelegateCommand(() => Confirm());
         }
         
@@ -339,33 +335,53 @@ namespace ExcelTool.ViewModels
             dic = new TalentDictionary();
             ExcelHelper.ReadTalentInfo(OldFilePath, dic);
 
-            //CompetentDepartments.Clear();
-            //foreach (var cd in dic.GetCompetentDepartments())
-            //    CompetentDepartments.Add(cd);
-
+            SchoolBase.Clear();
             Schools.Clear();
             foreach (var school in dic.GetSchools())
+            {
+                SchoolBase.Add(school);
                 Schools.Add(school);
+            }
 
-            //Institutes.Clear();
-            //foreach (var institute in dic.GetInstitutes())
-            //    Institutes.Add(institute);
+            InstituteBase.Clear();
+            Institutes.Clear();
+            foreach (var institute in dic.GetInstitutes())
+            {
+                InstituteBase.Add(institute);
+                Institutes.Add(institute);
+            }
 
-            //TalentTypes.Clear();
-            //foreach (var talentType in dic.GetTalentTypes())
-            //    TalentTypes.Add(talentType);
+            TalentTypes.Clear();
+            foreach (var talentType in dic.GetTalentTypes())
+                TalentTypes.Add(talentType);
 
-            //Positions.Clear();
-            //foreach(var position in dic.GetPositions())
-            //    Positions.Add(position);
+            Statuses.Clear();
+            foreach (var status in dic.GetStatuses())
+                Statuses.Add(status);
 
-            //ResearchInterestsKeywords.Clear();
-            //foreach (var researchInterestKeyword in dic.GetResearchInterestsKeywords())
-            //    ResearchInterestsKeywords.Add(researchInterestKeyword);
+            CADs.Clear();
+            foreach (var cad in dic.GetCADs())
+                CADs.Add(cad);
 
-            //Projects.Clear();
-            //foreach(var project in dic.GetProjects())
-            //    Projects.Add(project);
+            ComputerSoftwares.Clear();
+            foreach (var software in dic.GetComputerSoftwares())
+                ComputerSoftwares.Add(software);
+
+            ComputerApplications.Clear();
+            foreach (var app in dic.GetComputerApplications())
+                ComputerApplications.Add(app);
+
+            DevelopEnvironments.Clear();
+            foreach (var env in dic.GetDevelopEnvironments())
+                DevelopEnvironments.Add(env);
+
+            DevelopTechnologies.Clear();
+            foreach (var tech in dic.GetDevelopTechnologies())
+                DevelopTechnologies.Add(tech);
+
+            SoftwareDevelopments.Clear();
+            foreach (var dev in dic.GetSoftwareDevelopments())
+                SoftwareDevelopments.Add(dev);
         }
 
         private void SelectOldFile()
@@ -404,14 +420,37 @@ namespace ExcelTool.ViewModels
             }
         }
 
-        private void OnCompetentDepartmentSelectionChanged(IList<object> competentDepartments)
+        private void SearchSchool(string keyword)
         {
-            screenCondition.CompetentDepartments = competentDepartments;
+            List<string> keywords = StringHelper.Split(keyword, new string[] { ";" });
+            Schools.Clear();
+            foreach(string str in SchoolBase)
+            {
+                foreach(string key in keywords)
+                {
+                    if(str.Contains(key))
+                        Schools.Add(str);
+                }
+            }
         }
 
         private void OnSchoolSelectionChanged(IList<object> schools)
         {
             screenCondition.Schools = schools;
+        }
+
+        private void SearchInstitute(string keyword)
+        {
+            List<string> keywords = StringHelper.Split(keyword, new string[] { ";" });
+            Institutes.Clear();
+            foreach (string str in InstituteBase)
+            {
+                foreach (string key in keywords)
+                {
+                    if (str.Contains(key))
+                        Institutes.Add(str);
+                }
+            }
         }
 
         private void OnInstituteSelectionChanged(IList<object> institutes)
@@ -424,19 +463,39 @@ namespace ExcelTool.ViewModels
             screenCondition.TalentTypes = talentTypes;
         }
 
-        private void OnPositionSelectionChanged(IList<object> positions)
+        private void OnStatusSelectionChanged(IList<object> statuses)
         {
-            screenCondition.Positions = positions;
+            screenCondition.Statuses = statuses;
         }
 
-        private void OnResearchInterestsKeywordSelectionChanged(IList<object> researchInterestsKeywords)
+        private void OnCADSelectionChanged(IList<object> cads)
         {
-            screenCondition.ResearchInterestsKeywords = researchInterestsKeywords;
+            screenCondition.CADs = cads;
         }
 
-        private void OnProjectSelectionChanged(IList<object> projects)
+        private void OnComputerSoftwareSelectionChanged(IList<object> computerSoftwares)
         {
-            screenCondition.Projects = projects;
+            screenCondition.ComputerSoftwares = computerSoftwares;
+        }
+
+        private void OnComputerApplicationSelectionChanged(IList<object> computerApplications)
+        {
+            screenCondition.ComputerApplications = computerApplications;
+        }
+
+        private void OnDevelopEnvironmentSelectionChanged(IList<object> developEnvironments)
+        {
+            screenCondition.DevelopEnvironments = developEnvironments;
+        }
+
+        private void OnDevelopTechnologySelectionChanged(IList<object> developTechnologies)
+        {
+            screenCondition.DevelopTechnologies = developTechnologies;
+        }
+
+        private void OnSoftwareDevelopmentSelectionChanged(IList<object> softwareDevelopments)
+        {
+            screenCondition.SoftwareDevelopments = softwareDevelopments;
         }
 
         private void UpdateInstitutesKeywords()

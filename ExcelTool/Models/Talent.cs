@@ -14,8 +14,8 @@
         private string cad; // 辅助设计
         private string computerSoftware; // 计算机软件
         private string computerApplication; // 计算机应用
-        private string developmentEnvironment; // 开发环境
-        private string developmentTechnology; // 开发技术
+        private string developEnvironment; // 开发环境
+        private string developTechnology; // 开发技术
         private string softwareDevelopment; // 软件开发
         private string remark; // 备注
 
@@ -30,8 +30,8 @@
 
         public Talent(string school, string institute, string talentType,
                       string name, string phone, string status, string cad,
-                      string computerSoftware, string computerApplication, string developmentEnvironment,
-                      string developmentTechnology, string softwareDevelopment, string remark) : this()
+                      string computerSoftware, string computerApplication, string developEnvironment,
+                      string developTechnology, string softwareDevelopment, string remark) : this()
         {
             this.school = school;
             this.institute = institute == null ? "未知" : institute;
@@ -42,8 +42,8 @@
             this.cad = cad;
             this.computerSoftware = computerSoftware;
             this.computerApplication = computerApplication;
-            this.developmentEnvironment = developmentEnvironment;
-            this.developmentTechnology = developmentTechnology;
+            this.developEnvironment = developEnvironment;
+            this.developTechnology = developTechnology;
             this.softwareDevelopment = softwareDevelopment;
             this.remark = remark;
         }
@@ -112,16 +112,16 @@
             set => computerApplication = value;
         }
 
-        public string DevelopmentEnvironment
+        public string DevelopEnvironment
         {
-            get => developmentEnvironment;
-            set => developmentEnvironment = value;
+            get => developEnvironment;
+            set => developEnvironment = value;
         }
 
-        public string DevelopmentTechnology
+        public string DevelopTechnology
         {
-            get => developmentTechnology;
-            set => developmentTechnology = value;
+            get => developTechnology;
+            set => developTechnology = value;
         }
 
         public string SoftwareDevelopment
@@ -151,8 +151,8 @@
                     case 6: return CAD;
                     case 7: return ComputerSoftware;
                     case 8: return ComputerApplication;
-                    case 9: return DevelopmentEnvironment;
-                    case 10: return DevelopmentTechnology;
+                    case 9: return DevelopEnvironment;
+                    case 10: return DevelopTechnology;
                     case 11: return SoftwareDevelopment;
                     case 12: return Remark;
                     default: return "";

@@ -10,9 +10,13 @@ namespace ExcelTool.Models
         private IList<object> schools = null;
         private IList<object> institutes = null;
         private IList<object> talentTypes = null;
-        private IList<object> positions = null;
-        private IList<object> researchInterestsKeywords = null;
-        private IList<object> projects = null;
+        private IList<object> statuses = null;
+        private IList<object> cads = null;
+        private IList<object> computerSoftwares = null;
+        private IList<object> computerApplications = null;
+        private IList<object> developEnvironments = null;
+        private IList<object> developTechnologies = null;
+        private IList<object> softwareDevelopments = null;
 
         public bool[] ShowTitles
         {
@@ -54,22 +58,46 @@ namespace ExcelTool.Models
             set => talentTypes = value;
         }
 
-        public IList<object> Positions
+        public IList<object> Statuses
         {
-            get => positions ?? (positions = new List<object>());
-            set => positions = value;
+            get => statuses ?? (statuses = new List<object>());
+            set => statuses = value;
+        }
+        
+        public IList<object> CADs
+        {
+            get => cads ?? (cads = new List<object>());
+            set => cads = value;
         }
 
-        public IList<object> ResearchInterestsKeywords
+        public IList<object> ComputerSoftwares
         {
-            get => researchInterestsKeywords ?? (researchInterestsKeywords = new List<object>());
-            set => researchInterestsKeywords = value;
+            get => computerSoftwares ?? (computerSoftwares = new List<object>());
+            set => computerSoftwares = value;
         }
 
-        public IList<object> Projects
+        public IList<object> ComputerApplications
         {
-            get => projects ?? (projects = new List<object>());
-            set => projects = value;
+            get => computerApplications ?? (computerApplications = new List<object>());
+            set => computerApplications = value;
+        }
+
+        public IList<object> DevelopEnvironments
+        {
+            get => developEnvironments ?? (developEnvironments = new List<object>());
+            set => developEnvironments = value;
+        }
+
+        public IList<object> DevelopTechnologies
+        {
+            get => developTechnologies ?? (developTechnologies = new List<object>());
+            set => developTechnologies = value;
+        }
+
+        public IList<object> SoftwareDevelopments
+        {
+            get => softwareDevelopments ?? (softwareDevelopments = new List<object>());
+            set => softwareDevelopments = value;
         }
     }
 }

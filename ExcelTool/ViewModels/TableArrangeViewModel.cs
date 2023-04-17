@@ -5,31 +5,31 @@ using HIIUtils.HIIFile;
 using HIIUtils.MVVM;
 using Microsoft.Win32;
 using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExcelTool.ViewModels
 {
-    public class NewInfoArrangeViewModel : ViewModelBase
+    public class TableArrangeViewModel : ViewModelBase
     {
         #region 变量
+
         private string oldFilePath;
         private string newFilePath;
-        TalentDictionary dic = null;
-        #endregion
+        private TalentDictionary dic = null;
+
+        #endregion 变量
 
         #region 构造函数
-        public NewInfoArrangeViewModel()
+
+        public TableArrangeViewModel()
         {
             Init();
         }
-        #endregion
+
+        #endregion 构造函数
 
         #region 属性
+
         public string OldFilePath
         {
             get => oldFilePath;
@@ -41,15 +41,19 @@ namespace ExcelTool.ViewModels
             get => newFilePath;
             set => SetProperty(ref newFilePath, value);
         }
-        #endregion
+
+        #endregion 属性
 
         #region 命令
+
         public DelegateCommand SelectOldFileCmd { get; private set; }
         public DelegateCommand SelectNewFileCmd { get; private set; }
         public DelegateCommand ConfirmCmd { get; private set; }
-        #endregion
+
+        #endregion 命令
 
         #region 方法
+
         private void Init()
         {
             SelectOldFileCmd = new DelegateCommand(() => SelectOldFile());
@@ -110,6 +114,7 @@ namespace ExcelTool.ViewModels
             package.Dispose();
             MessageBox.Success("处理完成");
         }
-        #endregion
+
+        #endregion 方法
     }
 }

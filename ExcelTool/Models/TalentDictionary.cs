@@ -1,6 +1,8 @@
-﻿using OfficeOpenXml;
+﻿using HIIUtils.String;
+using OfficeOpenXml;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace ExcelTool.Models
 {
@@ -45,50 +47,105 @@ namespace ExcelTool.Models
 
         public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
         {
-            //ICollection<Talent> talents = new List<Talent>();
-            //foreach (var item in dic.Values)
-            //{
-            //    if (item.ResearchInterestsKeywords == null) continue;
-            //    List<string> keywords = StringHelper.Split(item.ResearchInterestsKeywords, new string[] { "、" });
-            //    bool valid = false;
-            //    foreach (var keyword in keywords)
-            //    {
-            //        if (screenCondition.ResearchInterestsKeywords.Count == 0 || screenCondition.ResearchInterestsKeywords.Contains(keyword))
-            //        {
-            //            valid = true;
-            //            break;
-            //        }
-            //    }
+            ICollection<Talent> talents = new List<Talent>();
+            foreach (var item in dic.Values)
+            {
+                if (item.TalentType == null) continue;
+                List<string> talentTypes = StringHelper.Split(item.TalentType, new string[] { "、" });
+                bool valid = false;
+                foreach (var talentType in talentTypes)
+                {
+                    if (screenCondition.TalentTypes.Count == 0 || screenCondition.TalentTypes.Contains(talentType))
+                    {
+                        valid = true;
+                        break;
+                    }
+                }
 
-            //    if (valid)
-            //    {
-            //        if (screenCondition.Projects.Count == 0 || screenCondition.Projects.Contains(item.Project))
-            //            talents.Add(item);
-            //    }
-            //}
+                if (valid)
+                {
+                    if (screenCondition.Statuses.Count > 0 && screenCondition.Statuses.Contains(item.Status)) continue;
 
-            //ExcelHelper.WriteTalentInfo(sheet, talents, screenCondition);
+                    if((screenCondition.CADs.Count == 0 && screenCondition.ComputerSoftwares.Count == 0
+                        && screenCondition.ComputerApplications.Count == 0 && screenCondition.DevelopEnvironments.Count == 0
+                        && screenCondition.DevelopTechnologies.Count == 0 && screenCondition.SoftwareDevelopments.Count == 0)
+                       || Contain(screenCondition.CADs, item.CAD)
+                       || Contain(screenCondition.ComputerSoftwares, item.ComputerSoftware)
+                       || Contain(screenCondition.ComputerApplications, item.ComputerApplication)
+                       || Contain(screenCondition.DevelopEnvironments, item.DevelopEnvironment)
+                       || Contain(screenCondition.DevelopTechnologies, item.DevelopTechnology)
+                       || Contain(screenCondition.SoftwareDevelopments, item.SoftwareDevelopment))
+                        talents.Add(item);
+                }
+            }
+
+            ExcelHelper.WriteTalentInfo(sheet, talents);
         }
 
-        public List<string> GetResearchInterestsKeywords()
+        public List<string> GetTalentTypes()
         {
             List<string> result = new List<string>();
-            //foreach (var item in dic.Values)
-            //{
-            //    if (item.ResearchInterestsKeywords != null)
-            //        result.AddRange(StringHelper.Split(item.ResearchInterestsKeywords, new string[] { "、" }));
-            //}
+            foreach (var item in dic.Values)
+            {
+                if(item.TalentType == null) continue;
+                result.AddRange(StringHelper.Split(item.TalentType, new string[] { "、" }));
+            }
             return result;
         }
 
-        public List<string> GetProjects()
+        public List<string> GetStatuses()
         {
             List<string> result = new List<string>();
-            //foreach (var item in dic.Values)
-            //{
-            //    if(item.Project != null)
-            //        result.Add(item.Project);
-            //}
+            foreach (var item in dic.Values)
+                result.Add(item.Status);
+            return result;
+        }
+
+        public List<string> GetCADs()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.Add(item.CAD);
+            return result;
+        }
+
+        public List<string> GetComputerSoftwares()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.Add(item.ComputerSoftware);
+            return result;
+        }
+
+        public List<string> GetComputerApplications()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.Add(item.ComputerApplication);
+            return result;
+        }
+
+        public List<string> GetDevelopEnvironments()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.Add(item.DevelopEnvironment);
+            return result;
+        }
+
+        public List<string> GetDevelopTechnologies()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.Add(item.DevelopTechnology);
+            return result;
+        }
+
+        public List<string> GetSoftwareDevelopments()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.Add(item.SoftwareDevelopment);
             return result;
         }
 
@@ -97,6 +154,11 @@ namespace ExcelTool.Models
             var item = dic.First();
             dic.Remove(item.Key);
             return item.Value;
+        }
+
+        private bool Contain(IList<object> list, object item)
+        {
+            return list.Count > 0 && list.Contains(item);
         }
     }
 
@@ -151,11 +213,30 @@ namespace ExcelTool.Models
 
         public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
         {
+            //bool write = false;
             foreach (var item in dic)
             {
-                int startRow = sheet.Dimension.End.Row + 1;
-                if (screenCondition.Schools.Count > 0 && !screenCondition.Schools.Contains(item.Key))
+                //if(screenCondition.Institutes.Count == 0)
+                //{
+                //    item.Value.WriteToExcel(sheet, screenCondition);
+                //    write = true;
+                //}
+                //else
+                //{
+                //    foreach(string str in screenCondition.Institutes)
+                //    {
+                //        if(item.Key.Contains(str))
+                //        {
+                //            item.Value.WriteToExcel(sheet, screenCondition);
+                //            write = true;
+                //            break;
+                //        }
+                //    }
+                //}
+
+                if (screenCondition.Institutes.Count > 0 && !screenCondition.Institutes.Contains(item.Key))
                     continue;
+                int startRow = sheet.Dimension.End.Row + 1;
                 item.Value.WriteToExcel(sheet, screenCondition);
                 int endRow = sheet.Dimension.End.Row;
                 if (endRow < startRow) continue;
@@ -165,11 +246,75 @@ namespace ExcelTool.Models
             }
         }
 
-        public List<string> GetSchools()
+        public List<string> GetInstitutes()
         {
             List<string> result = new List<string>();
             foreach (var item in dic.Keys)
                 result.Add(item);
+            return result;
+        }
+
+        public List<string> GetTalentTypes()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetTalentTypes());
+            return result;
+        }
+
+        public List<string> GetStatuses()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetStatuses());
+            return result;
+        }
+
+        public List<string> GetCADs()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetCADs());
+            return result;
+        }
+
+        public List<string> GetComputerSoftwares()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetComputerSoftwares());
+            return result;
+        }
+
+        public List<string> GetComputerApplications()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetComputerApplications());
+            return result;
+        }
+
+        public List<string> GetDevelopEnvironments()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetDevelopEnvironments());
+            return result;
+        }
+
+        public List<string> GetDevelopTechnologies()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetDevelopTechnologies());
+            return result;
+        }
+
+        public List<string> GetSoftwareDevelopments()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetSoftwareDevelopments());
             return result;
         }
 
@@ -254,7 +399,7 @@ namespace ExcelTool.Models
                 item.Value.WriteToExcel(sheet, screenCondition);
                 int endRow = sheet.Dimension.End.Row;
                 if (endRow < startRow) continue;
-                sheet.Cells[startRow, 2, endRow, 2].Merge = true;
+                sheet.Cells[startRow, 1, endRow, 1].Merge = true;
                 sheet.Cells[startRow, 2].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                 sheet.Cells[startRow, 2].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
             }
@@ -265,6 +410,78 @@ namespace ExcelTool.Models
             List<string> result = new List<string>();
             foreach (var item in dic.Keys)
                 result.Add(item);
+            return result;
+        }
+
+        public List<string> GetInstitutes()
+        {
+            List<string> result = new List<string>();
+            foreach(var item in dic.Values)
+                result.AddRange(item.GetInstitutes());
+            return result;
+        }
+
+        public List<string> GetTalentTypes()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetTalentTypes());
+            return result;
+        }
+
+        public List<string> GetStatuses()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetStatuses());
+            return result;
+        }
+
+        public List<string> GetCADs()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetCADs());
+            return result;
+        }
+
+        public List<string> GetComputerSoftwares()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetComputerSoftwares());
+            return result;
+        }
+
+        public List<string> GetComputerApplications()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetComputerApplications());
+            return result;
+        }
+
+        public List<string> GetDevelopEnvironments()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetDevelopEnvironments());
+            return result;
+        }
+
+        public List<string> GetDevelopTechnologies()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetDevelopTechnologies());
+            return result;
+        }
+
+        public List<string> GetSoftwareDevelopments()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in dic.Values)
+                result.AddRange(item.GetSoftwareDevelopments());
             return result;
         }
 
@@ -317,7 +534,7 @@ namespace ExcelTool.Models
 
         public void WriteToExcel(ExcelWorksheet sheet, ScreenCondition screenCondition)
         {
-            ExcelHelper.WriteTalentTitle(sheet, screenCondition);
+            ExcelHelper.WriteTalentTitle(sheet);
             dic.WriteToExcel(sheet, screenCondition);
         }
 
@@ -330,6 +547,83 @@ namespace ExcelTool.Models
         public List<string> GetSchools()
         {
             return dic.GetSchools();
+        }
+
+        public List<string> GetInstitutes()
+        {
+            return dic.GetInstitutes();
+        }
+
+        public List<string> GetTalentTypes()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetTalentTypes())
+                result.Add(item);
+
+            return result.ToList();
+        }
+
+        public List<string> GetStatuses()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetStatuses())
+                result.Add(item);
+
+            return result.ToList();
+        }
+
+        public List<string> GetCADs()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetCADs())
+                result.Add(item);
+
+            return result.ToList();
+        }
+
+        public List<string> GetComputerSoftwares()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetComputerSoftwares())
+                result.Add(item);
+
+            return result.ToList();
+        }
+
+        public List<string> GetComputerApplications()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetComputerApplications())
+                result.Add(item);
+
+            return result.ToList();
+        }
+
+        public List<string> GetDevelopEnvironments()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetDevelopEnvironments())
+                result.Add(item);
+
+            return result.ToList();
+        }
+
+        public List<string> GetDevelopTechnologies()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetDevelopTechnologies())
+                result.Add(item);
+
+            return result.ToList();
+        }
+
+        public List<string> GetSoftwareDevelopments()
+        {
+            HashSet<string> result = new HashSet<string>();
+            foreach (string item in dic.GetSoftwareDevelopments())
+                result.Add(item);
+
+            return result.ToList();
         }
 
         public Talent GetNextTalent()

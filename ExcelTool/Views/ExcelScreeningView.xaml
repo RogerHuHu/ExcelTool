@@ -128,38 +128,22 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <!--  地方  -->
-                            <Expander Grid.Row="0" Margin="5,5,0,0">
-                                <Expander.Header>
-                                    <TextBlock
-                                        Grid.Row="0"
-                                        FontSize="{DynamicResource FontSize4}"
-                                        FontWeight="Bold"
-                                        Text="{hiic:Lang Name=ETCompetentDepartment}" />
-                                </Expander.Header>
-                                <Border Background="{DynamicResource SecondaryRegionBrush}">
-                                    <hc:ScrollViewer
-                                        Grid.Row="1"
-                                        MaxHeight="500"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <lc:CheckBoxGroup x:Name="cbgCompetentDepartment" ItemsSource="{Binding CompetentDepartments}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="SelectionChanged">
-                                                    <i:InvokeCommandAction Command="{Binding CompetentDepartmentSelectionChanged}" CommandParameter="{Binding ElementName=cbgCompetentDepartment, Path=SelectedItems}" />
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </lc:CheckBoxGroup>
-                                    </hc:ScrollViewer>
-                                </Border>
-                            </Expander>
-
                             <!--  学校  -->
                             <Expander Grid.Row="1" Margin="5,5,0,0">
                                 <Expander.Header>
-                                    <TextBlock
-                                        FontSize="{DynamicResource FontSize4}"
-                                        FontWeight="Bold"
-                                        Text="{hiic:Lang Name=ETSchool}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="{DynamicResource FontSize4}"
+                                            FontWeight="Bold"
+                                            Text="{hiic:Lang Name=ETSchool}" />
+
+                                        <hc:SearchBar
+                                            Width="300"
+                                            Margin="10,0,0,0"
+                                            Command="{Binding SchoolSearchCmd}"
+                                            CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
+                                    </StackPanel>
                                 </Expander.Header>
                                 <hc:ScrollViewer MaxHeight="500" VerticalScrollBarVisibility="Auto">
                                     <lc:CheckBoxGroup x:Name="cbgSchool" ItemsSource="{Binding Schools}">
@@ -177,14 +161,21 @@
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock
+                                            VerticalAlignment="Center"
                                             FontSize="{DynamicResource FontSize4}"
                                             FontWeight="Bold"
                                             Text="{hiic:Lang Name=ETInstitute}" />
 
-                                        <CheckBox
+                                        <hc:SearchBar
+                                            Width="300"
+                                            Margin="10,0,0,0"
+                                            Command="{Binding InstituteSearchCmd}"
+                                            CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}" />
+
+                                        <!--<CheckBox
                                             x:Name="cbIsInsituteConfuse"
                                             Margin="10,0,0,0"
-                                            Content="{hiic:Lang Name=ETIsConfuseSearch}" />
+                                            Content="{hiic:Lang Name=ETIsConfuseSearch}" />-->
                                     </StackPanel>
                                 </Expander.Header>
                                 <StackPanel>
@@ -227,54 +218,180 @@
                                 </ScrollViewer>
                             </Expander>
 
-                            <!--  职位  -->
+                            <!--  状态  -->
                             <Expander Grid.Row="4" Margin="5,5,0,0">
                                 <Expander.Header>
                                     <CheckBox
-                                        Content="{hiic:Lang Name=ETPosition}"
+                                        Content="{hiic:Lang Name=ETStatus}"
                                         FontSize="{DynamicResource FontSize4}"
                                         FontWeight="Bold"
-                                        IsChecked="{Binding ShowPosition}" />
+                                        IsChecked="{Binding ShowStatus}" />
                                 </Expander.Header>
                                 <ScrollViewer MaxHeight="500" VerticalScrollBarVisibility="Auto">
-                                    <lc:CheckBoxGroup x:Name="cbgPosition" ItemsSource="{Binding Positions}">
+                                    <lc:CheckBoxGroup x:Name="cbgStatus" ItemsSource="{Binding Statuses}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="SelectionChanged">
-                                                <i:InvokeCommandAction Command="{Binding PositionSelectionChanged}" CommandParameter="{Binding ElementName=cbgPosition, Path=SelectedItems}" />
+                                                <i:InvokeCommandAction Command="{Binding StatusSelectionChanged}" CommandParameter="{Binding ElementName=cbgStatus, Path=SelectedItems}" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </lc:CheckBoxGroup>
                                 </ScrollViewer>
                             </Expander>
 
-                            <!--  研究方向关键字  -->
-                            <Expander Grid.Row="5" Margin="5,5,0,0">
-                                <Expander.Header>
-                                    <CheckBox
-                                        Content="{hiic:Lang Name=ETResearchInterestsKeywords}"
-                                        FontSize="{DynamicResource FontSize4}"
-                                        FontWeight="Bold"
-                                        IsChecked="{Binding ShowResearchInterestsKeywords}" />
-                                </Expander.Header>
-                                <ScrollViewer MaxHeight="500" VerticalScrollBarVisibility="Auto">
-                                    <lc:CheckBoxGroup x:Name="cbgResearchInterestsKeywords" ItemsSource="{Binding ResearchInterestsKeywords}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="SelectionChanged">
-                                                <i:InvokeCommandAction Command="{Binding ResearchInterestsKeywordsSelectionChanged}" CommandParameter="{Binding ElementName=cbgResearchInterestsKeywords, Path=SelectedItems}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </lc:CheckBoxGroup>
-                                </ScrollViewer>
-                            </Expander>
-
-                            <StackPanel Grid.Row="6" Orientation="Horizontal">
-                                <!--  详细研究方向  -->
-                                <CheckBox
+                            <StackPanel Grid.Row="5" Orientation="Horizontal">
+                                <!--  辅助设计  -->
+                                <hc:CheckComboBox
+                                    Name="ccmbCAD"
                                     Margin="5,5,0,0"
-                                    Content="{hiic:Lang Name=ETResearchInterests}"
+                                    hc:InfoElement.Title="{hiic:Lang Name=ETCAD}"
+                                    hc:InfoElement.TitlePlacement="Top"
                                     FontSize="{DynamicResource FontSize4}"
                                     FontWeight="Bold"
-                                    IsChecked="{Binding ShowResearchInterests}" />
+                                    ItemsSource="{Binding CADs}"
+                                    ShowClearButton="True"
+                                    ShowSelectAllButton="True"
+                                    Style="{StaticResource CheckComboBoxPlus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding CADSelectionChanged}" CommandParameter="{Binding ElementName=ccmbCAD, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </hc:CheckComboBox>
+
+                                <TextBlock
+                                    Margin="5,40,0,0"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    Text="{hiic:Lang Name=ETOr}" />
+
+                                <!--  计算机软件  -->
+                                <hc:CheckComboBox
+                                    Name="ccmbComputerSoftware"
+                                    Margin="5,5,0,0"
+                                    hc:InfoElement.Title="{hiic:Lang Name=ETComputerSoftware}"
+                                    hc:InfoElement.TitlePlacement="Top"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    ItemsSource="{Binding ComputerSoftwares}"
+                                    ShowClearButton="True"
+                                    ShowSelectAllButton="True"
+                                    Style="{StaticResource CheckComboBoxPlus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ComputerSoftwareSelectionChanged}" CommandParameter="{Binding ElementName=ccmbComputerSoftware, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </hc:CheckComboBox>
+
+                                <TextBlock
+                                    Margin="5,40,0,0"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    Text="{hiic:Lang Name=ETOr}" />
+
+                                <!--  计算机应用  -->
+                                <hc:CheckComboBox
+                                    Name="ccmbComputerApplication"
+                                    Margin="5,5,0,0"
+                                    hc:InfoElement.Title="{hiic:Lang Name=ETComputerApplication}"
+                                    hc:InfoElement.TitlePlacement="Top"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    ItemsSource="{Binding ComputerApplications}"
+                                    ShowClearButton="True"
+                                    ShowSelectAllButton="True"
+                                    Style="{StaticResource CheckComboBoxPlus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding ComputerApplicationSelectionChanged}" CommandParameter="{Binding ElementName=ccmbComputerApplication, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </hc:CheckComboBox>
+
+                                <TextBlock
+                                    Margin="5,40,0,0"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    Text="{hiic:Lang Name=ETOr}" />
+
+                                <!--  开发环境  -->
+                                <hc:CheckComboBox
+                                    Name="ccmbDevelopEnvironment"
+                                    Margin="5,5,0,0"
+                                    hc:InfoElement.Title="{hiic:Lang Name=ETDevelopEnvironment}"
+                                    hc:InfoElement.TitlePlacement="Top"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    ItemsSource="{Binding DevelopEnvironments}"
+                                    ShowClearButton="True"
+                                    ShowSelectAllButton="True"
+                                    Style="{StaticResource CheckComboBoxPlus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding DevelopEnvironmentSelectionChanged}" CommandParameter="{Binding ElementName=ccmbDevelopEnvironment, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </hc:CheckComboBox>
+
+                                <TextBlock
+                                    Margin="5,40,0,0"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    Text="{hiic:Lang Name=ETOr}" />
+
+                                <!--  开发技术  -->
+                                <hc:CheckComboBox
+                                    Name="ccmbDevelopTechnology"
+                                    Margin="5,5,0,0"
+                                    hc:InfoElement.Title="{hiic:Lang Name=ETDevelopTechnology}"
+                                    hc:InfoElement.TitlePlacement="Top"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    ItemsSource="{Binding DevelopTechnologies}"
+                                    ShowClearButton="True"
+                                    ShowSelectAllButton="True"
+                                    Style="{StaticResource CheckComboBoxPlus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding DevelopTechnologySelectionChanged}" CommandParameter="{Binding ElementName=ccmbDevelopTechnology, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </hc:CheckComboBox>
+
+                                <TextBlock
+                                    Margin="5,40,0,0"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    Text="{hiic:Lang Name=ETOr}" />
+
+                                <!--  软件开发  -->
+                                <hc:CheckComboBox
+                                    Name="ccmbSoftwareDevelopment"
+                                    Margin="5,5,0,0"
+                                    hc:InfoElement.Title="{hiic:Lang Name=ETSoftwareDevelopment}"
+                                    hc:InfoElement.TitlePlacement="Top"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    ItemsSource="{Binding SoftwareDevelopments}"
+                                    ShowClearButton="True"
+                                    ShowSelectAllButton="True"
+                                    Style="{StaticResource CheckComboBoxPlus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SoftwareDevelopmentSelectionChanged}" CommandParameter="{Binding ElementName=ccmbSoftwareDevelopment, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </hc:CheckComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="6" Orientation="Horizontal">
+                                <!--  电话  -->
+                                <CheckBox
+                                    Margin="5,5,0,0"
+                                    Content="{hiic:Lang Name=ETPhone}"
+                                    FontSize="{DynamicResource FontSize4}"
+                                    FontWeight="Bold"
+                                    IsChecked="{Binding ShowPhone}" />
 
                                 <!--  备注  -->
                                 <CheckBox
@@ -283,58 +400,7 @@
                                     FontSize="{DynamicResource FontSize4}"
                                     FontWeight="Bold"
                                     IsChecked="{Binding ShowRemark}" />
-
-                                <!--  科学院  -->
-                                <CheckBox
-                                    Margin="5,5,0,0"
-                                    Content="{hiic:Lang Name=ETAcademyOfScience}"
-                                    FontSize="{DynamicResource FontSize4}"
-                                    FontWeight="Bold"
-                                    IsChecked="{Binding ShowAcademyOfScience}" />
-
-                                <!--  职称  -->
-                                <CheckBox
-                                    Margin="5,5,0,0"
-                                    Content="{hiic:Lang Name=ETProfessionalTitle}"
-                                    FontSize="{DynamicResource FontSize4}"
-                                    FontWeight="Bold"
-                                    IsChecked="{Binding ShowProfessionalTitle}" />
                             </StackPanel>
-
-                            <!--  项目  -->
-                            <Expander Grid.Row="7" Margin="5,5,0,0">
-                                <Expander.Header>
-                                    <CheckBox
-                                        Content="{hiic:Lang Name=ETProject}"
-                                        FontSize="{DynamicResource FontSize4}"
-                                        FontWeight="Bold"
-                                        IsChecked="{Binding ShowProject}" />
-                                </Expander.Header>
-                                <hc:CheckComboBox
-                                    Name="ccmbProject"
-                                    Margin="5,5,0,0"
-                                    FontSize="{DynamicResource FontSize4}"
-                                    FontWeight="Bold"
-                                    ItemsSource="{Binding Projects}"
-                                    ShowClearButton="True"
-                                    ShowSelectAllButton="True"
-                                    Style="{StaticResource CheckComboBoxPlus}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding ProjectSelectionChanged}" CommandParameter="{Binding ElementName=ccmbProject, Path=SelectedItems}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </hc:CheckComboBox>
-                            </Expander>
-
-                            <!--  分组  -->
-                            <CheckBox
-                                Grid.Row="8"
-                                Margin="5,5,0,5"
-                                Content="{hiic:Lang Name=ETGroup}"
-                                FontSize="{DynamicResource FontSize4}"
-                                FontWeight="Bold"
-                                IsChecked="{Binding ShowGroup}" />
                         </Grid>
                     </ScrollViewer>
                 </hc:Card>
@@ -353,163 +419,6 @@
                         Style="{StaticResource ButtonPrimary}" />
                 </hc:Card>
 
-                <!--<hc:Card
-                    Margin="5"
-                    BorderThickness="0"
-                    Effect="{DynamicResource EffectShadow2}">
-                    <StackPanel>
-                        <hc:CheckComboBox
-                            Name="ccmbCompetentDepartment"
-                            Margin="5,5,0,0"
-                            hc:InfoElement.Title="{hiic:Lang Name=ETCompetentDepartment}"
-                            hc:InfoElement.TitlePlacement="Top"
-                            FontSize="{DynamicResource FontSize4}"
-                            FontWeight="Bold"
-                            ItemsSource="{Binding CompetentDepartments}"
-                            ShowClearButton="True"
-                            ShowSelectAllButton="True"
-                            Style="{StaticResource CheckComboBoxPlus}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding CompetentDepartmentSelectionChanged}" CommandParameter="{Binding ElementName=ccmbCompetentDepartment, Path=SelectedItems}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </hc:CheckComboBox>
-
-                        <hc:CheckComboBox
-                            Name="ccmbSchool"
-                            Margin="5,5,0,0"
-                            hc:InfoElement.Title="{hiic:Lang Name=ETSchool}"
-                            hc:InfoElement.TitlePlacement="Top"
-                            FontSize="{DynamicResource FontSize4}"
-                            FontWeight="Bold"
-                            ItemsSource="{Binding Schools}"
-                            ShowClearButton="True"
-                            ShowSelectAllButton="True"
-                            Style="{StaticResource CheckComboBoxPlus}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding SchoolSelectionChanged}" CommandParameter="{Binding ElementName=ccmbSchool, Path=SelectedItems}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </hc:CheckComboBox>
-
-                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                            <TextBlock
-                                Margin="12,0,0,0"
-                                FontSize="{DynamicResource FontSize4}"
-                                FontWeight="Bold"
-                                Text="{hiic:Lang Name=ETInstitute}" />
-
-                            <CheckBox
-                                x:Name="cbIsInsituteConfuse"
-                                Margin="10,0,0,0"
-                                Content="{hiic:Lang Name=ETIsConfuseSearch}" />
-                        </StackPanel>
-
-                        <hc:CheckComboBox
-                            Name="ccmbInstitute"
-                            Margin="5,5,0,0"
-                            FontSize="{DynamicResource FontSize4}"
-                            FontWeight="Bold"
-                            ItemsSource="{Binding Institutes}"
-                            ShowClearButton="True"
-                            ShowSelectAllButton="True"
-                            Style="{StaticResource CheckComboBoxPlus}"
-                            Visibility="{Binding ElementName=cbIsInsituteConfuse, Path=IsChecked, Converter={StaticResource Boolean2VisibilityReConverter}}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding InstitutSelectionChanged}" CommandParameter="{Binding ElementName=ccmbInstitute, Path=SelectedItems}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </hc:CheckComboBox>
-
-                        <TextBox
-                            Margin="5,5,0,0"
-                            Text="{Binding InstitutesKeywords, UpdateSourceTrigger=PropertyChanged}"
-                            Visibility="{Binding ElementName=cbIsInsituteConfuse, Path=IsChecked, Converter={StaticResource Boolean2VisibilityConverter}}" />
-
-                        <hc:CheckComboBox
-                            Name="ccmbTalentType"
-                            Margin="5,5,0,0"
-                            hc:InfoElement.Title="{hiic:Lang Name=ETTalentType}"
-                            hc:InfoElement.TitlePlacement="Top"
-                            FontSize="{DynamicResource FontSize4}"
-                            FontWeight="Bold"
-                            ItemsSource="{Binding TalentTypes}"
-                            ShowClearButton="True"
-                            ShowSelectAllButton="True"
-                            Style="{StaticResource CheckComboBoxPlus}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding TalentTypeSelectionChanged}" CommandParameter="{Binding ElementName=ccmbTalentType, Path=SelectedItems}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </hc:CheckComboBox>
-
-                        <hc:CheckComboBox
-                            Name="ccmbPosition"
-                            Margin="5,5,0,0"
-                            hc:InfoElement.Title="{hiic:Lang Name=ETPosition}"
-                            hc:InfoElement.TitlePlacement="Top"
-                            FontSize="{DynamicResource FontSize4}"
-                            FontWeight="Bold"
-                            ItemsSource="{Binding Positions}"
-                            ShowClearButton="True"
-                            ShowSelectAllButton="True"
-                            Style="{StaticResource CheckComboBoxPlus}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding PositionSelectionChanged}" CommandParameter="{Binding ElementName=ccmbPosition, Path=SelectedItems}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </hc:CheckComboBox>
-
-                        <hc:CheckComboBox
-                            Name="ccmbResearchInterestsKeywords"
-                            Margin="5,5,0,0"
-                            hc:InfoElement.Title="{hiic:Lang Name=ETResearchInterestsKeywords}"
-                            hc:InfoElement.TitlePlacement="Top"
-                            FontSize="{DynamicResource FontSize4}"
-                            FontWeight="Bold"
-                            ItemsSource="{Binding ResearchInterestsKeywords}"
-                            ShowClearButton="True"
-                            ShowSelectAllButton="True"
-                            Style="{StaticResource CheckComboBoxPlus}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding ResearchInterestsKeywordsSelectionChanged}" CommandParameter="{Binding ElementName=ccmbResearchInterestsKeywords, Path=SelectedItems}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </hc:CheckComboBox>
-
-                        <hc:CheckComboBox
-                            Name="ccmbProject"
-                            Margin="5,5,0,0"
-                            hc:InfoElement.Title="{hiic:Lang Name=ETProject}"
-                            hc:InfoElement.TitlePlacement="Top"
-                            FontSize="{DynamicResource FontSize4}"
-                            FontWeight="Bold"
-                            ItemsSource="{Binding Projects}"
-                            ShowClearButton="True"
-                            ShowSelectAllButton="True"
-                            Style="{StaticResource CheckComboBoxPlus}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding ProjectSelectionChanged}" CommandParameter="{Binding ElementName=ccmbProject, Path=SelectedItems}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </hc:CheckComboBox>
-
-                        <Button
-                            Margin="5,5,0,5"
-                            HorizontalAlignment="Left"
-                            Command="{Binding ConfirmCmd}"
-                            Content="{hiic:Lang Name=ETConfirm}"
-                            FontSize="{DynamicResource FontSize4}"
-                            Style="{StaticResource ButtonPrimary}" />
-                    </StackPanel>
-                </hc:Card>-->
             </Grid>
         </hc:Card>
     </Grid>

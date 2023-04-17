@@ -74,7 +74,7 @@ namespace ExcelTool
 
         private void NewInfoArrange()
         {
-            Dialog.Show(new NewInfoArrangeView());
+            Dialog.Show(new TableArrangeView());
         }
         #endregion 方法
     }

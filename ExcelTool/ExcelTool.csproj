@@ -101,6 +101,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="YamlDotNet, Version=13.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.13.0.2\lib\net47\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -118,7 +121,7 @@
     <Compile Include="ViewModels\ExcelMergeViewModel.cs" />
     <Compile Include="ViewModels\ExcelRemoveInvalidItemViewModel.cs" />
     <Compile Include="ViewModels\ExcelScreeningViewModel.cs" />
-    <Compile Include="ViewModels\NewInfoArrangeViewModel.cs" />
+    <Compile Include="ViewModels\TableArrangeViewModel.cs" />
     <Compile Include="Views\DeduplicationByNameView.xaml.cs">
       <DependentUpon>DeduplicationByNameView.xaml</DependentUpon>
     </Compile>
@@ -131,8 +134,8 @@
     <Compile Include="Views\ExcelScreeningView.xaml.cs">
       <DependentUpon>ExcelScreeningView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewInfoArrangeView.xaml.cs">
-      <DependentUpon>NewInfoArrangeView.xaml</DependentUpon>
+    <Compile Include="Views\TableArrangeView.xaml.cs">
+      <DependentUpon>TableArrangeView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\CheckBoxGroup.xaml">
       <SubType>Designer</SubType>
@@ -171,7 +174,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewInfoArrangeView.xaml">
+    <Page Include="Views\TableArrangeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,6 +198,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ConfigSamples\Config.yml" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -204,6 +208,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Config\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -40,5 +40,15 @@
     <sys:String x:Key="ETAcademyOfScience">科学院</sys:String>
     <sys:String x:Key="ETProfessionalTitle">职称</sys:String>
     <sys:String x:Key="ETGroup">分组</sys:String>
-    <sys:String x:Key="ETNewInfoArrange">新表格信息整理</sys:String>
+    <sys:String x:Key="ETTableArrange">表格整理</sys:String>
+    <sys:String x:Key="ETStatus">状态</sys:String>
+    <sys:String x:Key="ETCAD">辅助设计</sys:String>
+    <sys:String x:Key="ETComputerSoftware">计算机软件</sys:String>
+    <sys:String x:Key="ETComputerApplication">计算机应用</sys:String>
+    <sys:String x:Key="ETDevelopEnvironment">开发环境</sys:String>
+    <sys:String x:Key="ETDevelopTechnology">开发技术</sys:String>
+    <sys:String x:Key="ETSoftwareDevelopment">软件开发</sys:String>
+    <sys:String x:Key="ETScreenRule">筛选规则</sys:String>
+    <sys:String x:Key="ETOr">或</sys:String>
+    <sys:String x:Key="ETPhone">电话</sys:String>
 </ResourceDictionary>
