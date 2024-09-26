@@ -51,4 +51,5 @@
     <sys:String x:Key="ETScreenRule">筛选规则</sys:String>
     <sys:String x:Key="ETOr">或</sys:String>
     <sys:String x:Key="ETPhone">电话</sys:String>
+    <sys:String x:Key="ETProvincialAwardExpertInfoArrange">省奖评审专家信息整理</sys:String>
 </ResourceDictionary>

@@ -114,6 +114,9 @@
       <DependentUpon>CheckBoxGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="ExpertExcelHelper.cs" />
+    <Compile Include="Models\Expert.cs" />
+    <Compile Include="Models\ExpertDictionary.cs" />
     <Compile Include="Models\ScreenCondition.cs" />
     <Compile Include="Models\Talent.cs" />
     <Compile Include="Models\TalentDictionary.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="ViewModels\ExcelMergeViewModel.cs" />
     <Compile Include="ViewModels\ExcelRemoveInvalidItemViewModel.cs" />
     <Compile Include="ViewModels\ExcelScreeningViewModel.cs" />
+    <Compile Include="ViewModels\ProvincialAwardExpertInfoArrangeViewModel.cs" />
     <Compile Include="ViewModels\TableArrangeViewModel.cs" />
     <Compile Include="Views\DeduplicationByNameView.xaml.cs">
       <DependentUpon>DeduplicationByNameView.xaml</DependentUpon>
@@ -133,6 +137,9 @@
     </Compile>
     <Compile Include="Views\ExcelScreeningView.xaml.cs">
       <DependentUpon>ExcelScreeningView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProvincialAwardExpertInfoArrangeView.xaml.cs">
+      <DependentUpon>ProvincialAwardExpertInfoArrangeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TableArrangeView.xaml.cs">
       <DependentUpon>TableArrangeView.xaml</DependentUpon>
@@ -171,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ExcelScreeningView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProvincialAwardExpertInfoArrangeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

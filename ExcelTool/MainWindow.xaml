@@ -55,6 +55,13 @@
                     FontSize="{DynamicResource FontSize4}"
                     Style="{StaticResource ButtonPrimary}"
                     Visibility="Collapsed" />
+                <Button
+                    Width="{Binding ButtonWidth}"
+                    Margin="5,0,0,0"
+                    Command="{Binding ProvincialAwardExpertInfoArrangeCmd}"
+                    Content="{hiic:Lang Name=ETProvincialAwardExpertInfoArrange}"
+                    FontSize="{DynamicResource FontSize4}"
+                    Style="{StaticResource ButtonPrimary}" />
             </WrapPanel>
         </hc:Card>
     </Grid>
